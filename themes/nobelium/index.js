@@ -22,6 +22,7 @@ import { BlogListScroll } from './components/BlogListScroll'
 import Catalog from './components/Catalog'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
+import LeoHomeIntro from './components/LeoHomeIntro'
 import Nav from './components/Nav'
 import SearchNavBar from './components/SearchNavBar'
 import CONFIG from './config'
@@ -110,7 +111,17 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  return <LayoutPostList {...props} topSlot={<Announcement {...props} />} />
+  return (
+    <LayoutPostList
+      {...props}
+      topSlot={
+        <>
+          <LeoHomeIntro />
+          <Announcement {...props} />
+        </>
+      }
+    />
+  )
 }
 
 /**
