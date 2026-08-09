@@ -45,3 +45,11 @@ No database schema, configuration center, view, or required NotionNext property 
 To restore any record, change its Notion `status` from `Invisible` to `Published`. The original page content and metadata remain intact.
 
 Physical deletion should only be considered after the redesigned production site has remained stable and the retained content has been reviewed again.
+
+## Active site overrides
+
+- `THEME`: `nobelium`
+- `LANG`: `zh-CN`
+- Legacy test `GLOBAL_JS`: disabled
+
+These values are stored in the Notion `CONFIG-TABLE`, whose enabled entries override Vercel environment variables and repository defaults.
