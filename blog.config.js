@@ -1,11 +1,21 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/article/how-to-config-notion-next#c4768010ae7d44609b744e79e2f9959a
 
+const CONTENT_SOURCE =
+  process.env.NEXT_PUBLIC_CONTENT_SOURCE || 'content-library'
+const CONTENT_LIBRARY_PAGE_ID =
+  process.env.CONTENT_LIBRARY_PAGE_ID ||
+  '3aa1f47a761180c682f1e4dc51afee42'
+
 const BLOG = {
   API_BASE_URL: process.env.API_BASE_URL || 'https://www.notion.so/api/v3', // API默认请求地址,可以配置成自己的地址例如：https://[xxxxx].notion.site/api/v3
   // Important page_id！！！Duplicate Template from  https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5
+  CONTENT_SOURCE,
+  CONTENT_LIBRARY_PAGE_ID,
+  LEGACY_NOTION_PAGE_ID: process.env.NOTION_PAGE_ID || '',
   NOTION_PAGE_ID:
-    process.env.NOTION_PAGE_ID ||
-    '02ab3b8678004aa69e9e415905ef32a5,en:7c1d570661754c8fbc568e00a01fd70e',
+    CONTENT_SOURCE === 'legacy'
+      ? process.env.NOTION_PAGE_ID || CONTENT_LIBRARY_PAGE_ID
+      : CONTENT_LIBRARY_PAGE_ID,
   THEME: process.env.NEXT_PUBLIC_THEME || 'nobelium', // Leo 数字工坊采用极简、以阅读为中心的 Nobelium 主题
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
