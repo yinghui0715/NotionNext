@@ -172,6 +172,11 @@ const Style = () => {
         color: #fff;
       }
 
+      .dark .leo-button-primary,
+      .dark .leo-button-primary:hover {
+        color: #0b1120;
+      }
+
       .leo-button-secondary {
         border-color: var(--leo-line);
         background: var(--leo-card);
