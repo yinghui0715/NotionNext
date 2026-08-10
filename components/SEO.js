@@ -239,7 +239,8 @@ const SEO = props => {
               image,
               AUTHOR,
               LINK,
-              BRAND_NAME
+              BRAND_NAME,
+              keywords
             )
           )
         }}
@@ -288,7 +289,8 @@ export const generateStructuredData = (
   image,
   author,
   siteUrl,
-  publisherName = siteInfo?.title
+  publisherName = siteInfo?.title,
+  keywords = resolveSeoKeywords(meta?.tags)
 ) => {
   const baseData = {
     '@context': 'https://schema.org',
@@ -337,7 +339,7 @@ export const generateStructuredData = (
         '@type': 'WebPage',
         '@id': url
       },
-      keywords: meta.tags?.join(', '),
+      keywords,
       articleSection: meta.category
     }
   }

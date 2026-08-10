@@ -65,6 +65,21 @@ describe('SEO structured data', () => {
       publisher: { '@type': 'Organization', name: 'Example Publisher' }
     })
   })
+
+  it('uses fallback keywords in BlogPosting data when an article has no tags', () => {
+    const data = generateStructuredData(
+      { type: 'Post', title: 'Untagged article', tags: [] },
+      siteInfo,
+      'https://example.com/article/untagged',
+      'https://example.com/cover.png',
+      'Example Author',
+      'https://example.com',
+      'Example Publisher',
+      'AI, 自动化, 数字生产力'
+    )
+
+    expect(data.keywords).toBe('AI, 自动化, 数字生产力')
+  })
 })
 
 describe('SEO keywords', () => {
