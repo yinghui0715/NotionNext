@@ -86,7 +86,7 @@ const Style = () => {
       }
 
       .leo-menu-button {
-        display: inline-flex;
+        display: none;
         width: 2.25rem;
         height: 2.25rem;
         align-items: center;
@@ -649,6 +649,12 @@ const Style = () => {
 
         .leo-project-detail {
           grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .leo-menu-button {
+          display: inline-flex;
         }
       }
 
