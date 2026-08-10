@@ -84,22 +84,30 @@ const LayoutBase = props => {
                 : 'px-4 md:px-24'
           }`}
         >
-          <Transition
-            show={!onLoading}
-            appear={true}
-            enter='transition ease-in-out duration-700 transform order-first'
-            enterFrom='opacity-0 translate-y-16'
-            enterTo='opacity-100'
-            leave='transition ease-in-out duration-300 transform'
-            leaveFrom='opacity-100 translate-y-0'
-            leaveTo='opacity-0 -translate-y-16'
-            unmount={false}
-          >
-            {/* 顶部插槽 */}
-            {topSlot}
-            {children}
-            {post && <Catalog toc={post?.toc} />}
-          </Transition>
+          {isBrandPage ? (
+            <>
+              {topSlot}
+              {children}
+              {post && <Catalog toc={post?.toc} />}
+            </>
+          ) : (
+            <Transition
+              show={!onLoading}
+              appear={true}
+              enter='transition ease-in-out duration-700 transform order-first'
+              enterFrom='opacity-0 translate-y-16'
+              enterTo='opacity-100'
+              leave='transition ease-in-out duration-300 transform'
+              leaveFrom='opacity-100 translate-y-0'
+              leaveTo='opacity-0 -translate-y-16'
+              unmount={false}
+            >
+              {/* 顶部插槽 */}
+              {topSlot}
+              {children}
+              {post && <Catalog toc={post?.toc} />}
+            </Transition>
+          )}
         </main>
 
         {/* 页脚 */}
