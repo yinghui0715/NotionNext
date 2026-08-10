@@ -290,7 +290,7 @@ export const generateStructuredData = (
   author,
   siteUrl,
   publisherName = siteInfo?.title,
-  keywords = resolveSeoKeywords(meta?.tags)
+  keywords = Array.isArray(meta?.tags) ? meta.tags.join(', ') : meta?.tags
 ) => {
   const baseData = {
     '@context': 'https://schema.org',

@@ -5,7 +5,7 @@ export function EmptyData(pageId?: string): SiteData {
   return {
     NOTION_CONFIG: {},
     siteInfo: {
-      title: 'NotionNext BLOG',
+      title: 'Leo 数字工坊',
       description: '无法获取 Notion 数据',
       pageCover: '/bg_image.jpg',
       icon: '/avatar.svg',
