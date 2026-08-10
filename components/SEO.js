@@ -309,7 +309,8 @@ export const generateStructuredData = (
         '@type': 'ImageObject',
         url: getAbsoluteImageUrl(siteInfo?.icon, siteUrl)
       }
-    }
+    },
+    keywords
   }
 
   // 如果是文章页面，添加文章结构化数据
@@ -385,7 +386,7 @@ const getSEOMeta = (props, router, locale) => {
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | ${siteInfo?.description}`,
+        title: `${siteInfo?.title} | AI Automation × Engineering AI`,
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: '',
