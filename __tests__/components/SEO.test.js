@@ -1,4 +1,4 @@
-import { generateStructuredData } from '@/components/SEO'
+import { generateStructuredData, resolveSeoKeywords } from '@/components/SEO'
 
 describe('SEO structured data', () => {
   const siteInfo = {
@@ -64,5 +64,17 @@ describe('SEO structured data', () => {
       author: { '@type': 'Person', name: 'Example Author' },
       publisher: { '@type': 'Organization', name: 'Example Publisher' }
     })
+  })
+})
+
+describe('SEO keywords', () => {
+  const fallback = 'AI, 自动化, 数字生产力'
+
+  it('uses site keywords when an article has no tags', () => {
+    expect(resolveSeoKeywords([], fallback)).toBe(fallback)
+  })
+
+  it('uses article tags when available', () => {
+    expect(resolveSeoKeywords(['AI', '知识管理'], fallback)).toBe('AI,知识管理')
   })
 })

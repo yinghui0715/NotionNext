@@ -54,10 +54,7 @@ const SEO = props => {
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
-  let keywords = meta?.tags || KEYWORDS
-  if (post?.tags && post?.tags?.length > 0) {
-    keywords = post?.tags?.join(',')
-  }
+  const keywords = resolveSeoKeywords(meta?.tags || post?.tags, KEYWORDS)
   if (meta) {
     url = createSiteUrl(url, meta.slug) || url
     image = getAbsoluteImageUrl(meta.image || '/bg_image.jpg', LINK)
@@ -265,6 +262,14 @@ const SEO = props => {
       {children}
     </Head>
   )
+}
+
+export const resolveSeoKeywords = (tags, fallbackKeywords) => {
+  if (Array.isArray(tags)) {
+    return tags.length > 0 ? tags.join(',') : fallbackKeywords
+  }
+
+  return typeof tags === 'string' && tags.trim() ? tags : fallbackKeywords
 }
 
 /**
