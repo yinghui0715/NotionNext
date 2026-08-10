@@ -1,3 +1,11 @@
+jest.mock('@notionhq/client', () => ({
+  Client: jest.fn()
+}))
+
+jest.mock('@/lib/db/notion/getPageProperties', () => ({
+  adjustPageProperties: jest.fn()
+}))
+
 import {
   INTERNAL_PUBLISHING_WORKSPACE,
   removeInternalPublishingWorkspaces
