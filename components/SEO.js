@@ -54,10 +54,7 @@ const SEO = props => {
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
-  let keywords = meta?.tags || KEYWORDS
-  if (post?.tags && post?.tags?.length > 0) {
-    keywords = post?.tags?.join(',')
-  }
+  const keywords = resolveSeoKeywords(meta?.tags || post?.tags, KEYWORDS)
   if (meta) {
     url = createSiteUrl(url, meta.slug) || url
     image = getAbsoluteImageUrl(meta.image || '/bg_image.jpg', LINK)
@@ -66,8 +63,7 @@ const SEO = props => {
   const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type === 'Post' ? 'article' : meta?.type || 'website'
-  const language =
-    router?.locale || siteConfig('LANG', 'zh-CN', NOTION_CONFIG)
+  const language = router?.locale || siteConfig('LANG', 'zh-CN', NOTION_CONFIG)
   const lang = String(language).replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = Array.isArray(meta?.category)
     ? meta?.category?.[0]
@@ -116,6 +112,8 @@ const SEO = props => {
   const TWITTER_CREATOR = siteConfig('TWITTER_CREATOR', '', NOTION_CONFIG)
 
   const AUTHOR = siteConfig('AUTHOR')
+  const BRAND_NAME = siteConfig('BRAND_NAME')
+  const BRAND_NAME_EN = siteConfig('BRAND_NAME_EN')
   return (
     <Head>
       <link rel='icon' href={favicon} />
@@ -125,7 +123,10 @@ const SEO = props => {
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
-      <meta name='robots' content='follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1' />
+      <meta
+        name='robots'
+        content='follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+      />
       <meta charSet='UTF-8' />
       <meta name='format-detection' content='telephone=no' />
       <meta name='mobile-web-app-capable' content='yes' />
@@ -152,7 +153,7 @@ const SEO = props => {
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta name='author' content={AUTHOR} />
-      <meta name='generator' content='NotionNext' />
+      <meta name='generator' content={BRAND_NAME_EN} />
 
       {/* 语言和地区 */}
       <meta httpEquiv='content-language' content={language} />
@@ -206,7 +207,10 @@ const SEO = props => {
       {meta?.type === 'Post' && (
         <>
           {meta.publishTime && (
-            <meta property='article:published_time' content={meta.publishTime} />
+            <meta
+              property='article:published_time'
+              content={meta.publishTime}
+            />
           )}
           {meta.modifiedTime && (
             <meta
@@ -228,13 +232,23 @@ const SEO = props => {
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
-            generateStructuredData(meta, siteInfo, url, image, AUTHOR, LINK)
+            generateStructuredData(
+              meta,
+              siteInfo,
+              url,
+              image,
+              AUTHOR,
+              LINK,
+              BRAND_NAME
+            )
           )
         }}
       />
 
       {/* DNS预取和预连接 */}
-      {hasWebFontUrl && <link rel='dns-prefetch' href='//fonts.googleapis.com' />}
+      {hasWebFontUrl && (
+        <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+      )}
       <link rel='dns-prefetch' href='//www.google-analytics.com' />
       <link rel='dns-prefetch' href='//www.googletagmanager.com' />
       {hasWebFontUrl && (
@@ -248,6 +262,14 @@ const SEO = props => {
       {children}
     </Head>
   )
+}
+
+export const resolveSeoKeywords = (tags, fallbackKeywords) => {
+  if (Array.isArray(tags)) {
+    return tags.length > 0 ? tags.join(',') : fallbackKeywords
+  }
+
+  return typeof tags === 'string' && tags.trim() ? tags : fallbackKeywords
 }
 
 /**
@@ -265,7 +287,8 @@ export const generateStructuredData = (
   url,
   image,
   author,
-  siteUrl
+  siteUrl,
+  publisherName = siteInfo?.title
 ) => {
   const baseData = {
     '@context': 'https://schema.org',
@@ -279,7 +302,7 @@ export const generateStructuredData = (
     },
     publisher: {
       '@type': 'Organization',
-      name: siteInfo?.title,
+      name: publisherName,
       logo: {
         '@type': 'ImageObject',
         url: getAbsoluteImageUrl(siteInfo?.icon, siteUrl)
@@ -304,7 +327,7 @@ export const generateStructuredData = (
       },
       publisher: {
         '@type': 'Organization',
-        name: siteInfo?.title,
+        name: publisherName,
         logo: {
           '@type': 'ImageObject',
           url: getAbsoluteImageUrl(siteInfo?.icon, siteUrl)
@@ -458,8 +481,7 @@ const getSEOMeta = (props, router, locale) => {
         publishDay: post?.publishDay,
         lastEditedDay: post?.lastEditedDay,
         publishTime:
-          getIsoTime(post?.publishDate) ||
-          getIsoTime(post?.date?.start_date),
+          getIsoTime(post?.publishDate) || getIsoTime(post?.date?.start_date),
         modifiedTime: getIsoTime(post?.lastEditedTime || post?.lastEditedDate)
       }
   }

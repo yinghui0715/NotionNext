@@ -1,4 +1,4 @@
-import { generateStructuredData } from '@/components/SEO'
+import { generateStructuredData, resolveSeoKeywords } from '@/components/SEO'
 
 describe('SEO structured data', () => {
   const siteInfo = {
@@ -22,7 +22,8 @@ describe('SEO structured data', () => {
       'https://example.com/article/structured-data',
       'https://example.com/cover.png',
       'Example Author',
-      'https://example.com'
+      'https://example.com',
+      'Example Publisher'
     )
 
     expect(data).toMatchObject({
@@ -40,6 +41,8 @@ describe('SEO structured data', () => {
       }
     })
     expect(data.publisher.logo.url).toBe('https://example.com/logo.png')
+    expect(data.author.name).toBe('Example Author')
+    expect(data.publisher.name).toBe('Example Publisher')
   })
 
   it('generates WebSite data for non-article pages', () => {
@@ -49,14 +52,29 @@ describe('SEO structured data', () => {
       'https://example.com/about',
       'https://example.com/cover.png',
       'Example Author',
-      'https://example.com'
+      'https://example.com',
+      'Example Publisher'
     )
 
     expect(data).toMatchObject({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Example Blog',
-      url: 'https://example.com'
+      url: 'https://example.com',
+      author: { '@type': 'Person', name: 'Example Author' },
+      publisher: { '@type': 'Organization', name: 'Example Publisher' }
     })
+  })
+})
+
+describe('SEO keywords', () => {
+  const fallback = 'AI, 自动化, 数字生产力'
+
+  it('uses site keywords when an article has no tags', () => {
+    expect(resolveSeoKeywords([], fallback)).toBe(fallback)
+  })
+
+  it('uses article tags when available', () => {
+    expect(resolveSeoKeywords(['AI', '知识管理'], fallback)).toBe('AI,知识管理')
   })
 })
