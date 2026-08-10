@@ -14,17 +14,17 @@ Set `NEXT_PUBLIC_CONTENT_SOURCE=legacy` to restore the legacy source without rev
 
 ## Field mapping
 
-| Content Library | Website model |
-| --- | --- |
-| Name | title |
-| Status | status |
-| Summary | summary |
-| Category | category |
-| Publish Date | date |
-| Publish Channel | publishChannels |
-| Content ID | slug, with the Notion page ID as fallback |
-| Content Type | contentType |
-| Series | series |
+| Content Library | Website model                             |
+| --------------- | ----------------------------------------- |
+| Name            | title                                     |
+| Status          | status                                    |
+| Summary         | summary                                   |
+| Category        | category                                  |
+| Publish Date    | date                                      |
+| Publish Channel | publishChannels                           |
+| Content ID      | slug, with the Notion page ID as fallback |
+| Content Type    | contentType                               |
+| Series          | series                                    |
 
 All Content Library records are represented as website posts. Their Notion page content remains the article body.
 
@@ -35,7 +35,10 @@ Production requires both conditions:
 1. `Status = Published`
 2. `Publish Channel` contains `网站`
 
-Protected Vercel previews may display all Published records for review. Set `CONTENT_LIBRARY_PREVIEW_ALL_PUBLISHED=false` to disable this preview allowance.
+The same gate applies to Preview and Production. Preview protection provides Human Review without weakening the content query.
+
+`NOTION_API_KEY` is a server-only secret used by the official Notion API. It must be configured as a sensitive Vercel environment variable for Preview and Production and must never use a `NEXT_PUBLIC_` prefix.
+Content Library mode fails closed when this variable is missing; it does not fall back to anonymous database access.
 
 ## Rollback
 

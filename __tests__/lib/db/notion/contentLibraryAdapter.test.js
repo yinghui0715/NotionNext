@@ -66,7 +66,7 @@ describe('contentLibraryAdapter', () => {
     ).toBe(true)
   })
 
-  it('allows published records in protected Vercel previews', () => {
+  it('keeps the website channel gate in protected Vercel previews', () => {
     process.env.VERCEL_ENV = 'preview'
     expect(
       isWebsiteEligibleContent({
@@ -74,6 +74,6 @@ describe('contentLibraryAdapter', () => {
         status: 'Published',
         publishChannels: ['公众号']
       })
-    ).toBe(true)
+    ).toBe(false)
   })
 })
