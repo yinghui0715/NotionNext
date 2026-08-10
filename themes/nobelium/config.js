@@ -4,9 +4,9 @@ const CONFIG = {
 
   // Leo 数字工坊首页
   NOBELIUM_LEO_EYEBROW: 'LEO DIGITAL LAB',
-  NOBELIUM_LEO_TITLE: '把零散的工具，变成长期可用的数字系统',
+  NOBELIUM_LEO_TITLE: '用数字工具，建立更清晰的工作与生活',
   NOBELIUM_LEO_DESCRIPTION:
-    '记录 AI、自动化与个人数字系统的真实实践。关注方法、验证和长期维护，而不是追逐工具本身。',
+    '分享 AI、自动化、知识管理与个人数字系统的真实实践，把复杂的工具整理成普通人也能使用、长期维护的方法。',
 
   // 特殊菜单
   NOBELIUM_MENU_RANDOM_POST: false, // 极简导航不显示随机文章
