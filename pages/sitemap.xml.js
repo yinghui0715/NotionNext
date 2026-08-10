@@ -9,6 +9,7 @@ import {
   toSitemapDateString
 } from '@/lib/sitemap-utils'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
+import { LEO_PROJECTS } from '@/lib/site/leoBrandContent'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
@@ -50,7 +51,10 @@ function generateLocalesSitemap(link, allPages, locale) {
 
   const defaultFields = [
     {
-      loc: buildSitemapLoc({ baseUrl: normalizedLink, locale: normalizedLocale }),
+      loc: buildSitemapLoc({
+        baseUrl: normalizedLink,
+        locale: normalizedLocale
+      }),
       lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
@@ -104,14 +108,36 @@ function generateLocalesSitemap(link, allPages, locale) {
       lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
-    }
+    },
+    ...['projects', 'about', 'contact'].map(slug => ({
+      loc: buildSitemapLoc({
+        baseUrl: normalizedLink,
+        locale: normalizedLocale,
+        slug
+      }),
+      lastmod: dateNow,
+      changefreq: 'weekly',
+      priority: slug === 'projects' ? '0.9' : '0.7'
+    })),
+    ...LEO_PROJECTS.map(project => ({
+      loc: buildSitemapLoc({
+        baseUrl: normalizedLink,
+        locale: normalizedLocale,
+        slug: `projects/${project.slug}`
+      }),
+      lastmod: dateNow,
+      changefreq: 'weekly',
+      priority: '0.8'
+    }))
   ].filter(field => Boolean(field?.loc))
 
   const postFields =
     allPages
       ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
       // 过滤掉外部链接(http开头)和锚点链接(#开头)
-      ?.filter(p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#'))
+      ?.filter(
+        p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#')
+      )
       ?.map(post => {
         const loc = buildSitemapLoc({
           baseUrl: normalizedLink,
@@ -138,7 +164,10 @@ function getUniqueFields(fields) {
   fields.forEach(field => {
     const existingField = uniqueFieldsMap.get(field.loc)
 
-    if (!existingField || new Date(field.lastmod) > new Date(existingField.lastmod)) {
+    if (
+      !existingField ||
+      new Date(field.lastmod) > new Date(existingField.lastmod)
+    ) {
       uniqueFieldsMap.set(field.loc, field)
     }
   })
@@ -146,4 +175,4 @@ function getUniqueFields(fields) {
   return Array.from(uniqueFieldsMap.values())
 }
 
-export default () => { }
+export default () => {}

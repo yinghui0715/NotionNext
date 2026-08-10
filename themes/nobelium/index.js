@@ -22,7 +22,7 @@ import { BlogListScroll } from './components/BlogListScroll'
 import Catalog from './components/Catalog'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
-import LeoHomeIntro from './components/LeoHomeIntro'
+import LeoHomeIntro, { LeoHomeClosing } from './components/LeoHomeIntro'
 import Nav from './components/Nav'
 import SearchNavBar from './components/SearchNavBar'
 import CONFIG from './config'
@@ -47,6 +47,14 @@ const LayoutBase = props => {
   const { children, post } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
+  const router = useRouter()
+  const isBrandPage = [
+    '/',
+    '/projects',
+    '/projects/[slug]',
+    '/about',
+    '/contact'
+  ].includes(router.route)
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -54,10 +62,12 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalNobelium.Provider
-      value={{ searchModal, filterKey, setFilterKey }}>
+      value={{ searchModal, filterKey, setFilterKey }}
+    >
       <div
         id='theme-nobelium'
-        className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}
+      >
         <Style />
 
         {/* 顶部导航栏 */}
@@ -66,7 +76,14 @@ const LayoutBase = props => {
         {/* 主区 */}
         <main
           id='out-wrapper'
-          className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
+          className={`relative m-auto flex-grow w-full transition-all ${
+            isBrandPage
+              ? 'max-w-6xl px-4 sm:px-6 lg:px-8'
+              : !fullWidth
+                ? 'max-w-2xl px-4'
+                : 'px-4 md:px-24'
+          }`}
+        >
           <Transition
             show={!onLoading}
             appear={true}
@@ -76,7 +93,8 @@ const LayoutBase = props => {
             leave='transition ease-in-out duration-300 transform'
             leaveFrom='opacity-100 translate-y-0'
             leaveTo='opacity-0 -translate-y-16'
-            unmount={false}>
+            unmount={false}
+          >
             {/* 顶部插槽 */}
             {topSlot}
             {children}
@@ -112,15 +130,12 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   return (
-    <LayoutPostList
-      {...props}
-      topSlot={
-        <>
-          <LeoHomeIntro />
-          <Announcement {...props} />
-        </>
-      }
-    />
+    <>
+      <LeoHomeIntro />
+      <Announcement {...props} />
+      <BlogListPage {...props} variant='home' />
+      <LeoHomeClosing />
+    </>
   )
 }
 
@@ -236,19 +251,18 @@ const LayoutSlug = props => {
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector('#article-wrapper #notion-article')
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        waiting404
-      )
+        }
+      }, waiting404)
     }
   }, [post])
   return (
@@ -291,16 +305,21 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <>
-        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-            <div className='dark:text-gray-200'>
-                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
-                <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
-                </div>
-            </div>
+  return (
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+          </div>
         </div>
+      </div>
     </>
+  )
 }
 
 /**
@@ -320,11 +339,13 @@ const LayoutCategoryIndex = props => {
               key={category.name}
               href={`/category/${category.name}`}
               passHref
-              legacyBehavior>
+              legacyBehavior
+            >
               <div
                 className={
                   'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-                }>
+                }
+              >
                 <i className='mr-4 fas fa-folder' />
                 {category.name}({category.count})
               </div>
@@ -354,7 +375,8 @@ const LayoutTagIndex = props => {
                   key={tag}
                   href={`/tag/${encodeURIComponent(tag.name)}`}
                   passHref
-                  className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+                  className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}
+                >
                   <div className='font-light dark:text-gray-400'>
                     <i className='mr-1 fas fa-tag' />{' '}
                     {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}

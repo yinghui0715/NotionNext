@@ -28,11 +28,13 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Leo', // 网站作者
   BRAND_NAME: process.env.NEXT_PUBLIC_BRAND_NAME || 'Leo 数字工坊',
   BRAND_NAME_EN: process.env.NEXT_PUBLIC_BRAND_NAME_EN || 'Leo Digital Lab',
-  BIO: process.env.NEXT_PUBLIC_BIO || '一个普通的干饭人🍚', // 作者简介
+  BIO:
+    process.env.NEXT_PUBLIC_BIO ||
+    '工程师，专注 AI Automation × Engineering AI 的长期实践。',
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.leodigitallab.com', // 网站地址
   KEYWORDS:
     process.env.NEXT_PUBLIC_KEYWORD ||
-    'AI, 自动化, 数字生产力, 个人数字系统, 知识管理, Notion, 效率工具, 数字生活',
+    'Engineering AI, AI Agents, AI Automation, 工作流自动化, 工程数字化, Digital Systems, Build in Public, 知识管理',
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK:

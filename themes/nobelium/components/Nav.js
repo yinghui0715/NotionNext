@@ -2,20 +2,17 @@ import Collapse from '@/components/Collapse'
 import DarkModeButton from '@/components/DarkModeButton'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
+import { LEO_NAV_ITEMS } from '@/lib/site/leoBrandContent'
+import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
-import { MenuItemCollapse } from './MenuItemCollapse'
-import { MenuItemDrop } from './MenuItemDrop'
-import RandomPostButton from './RandomPostButton'
-import SearchButton from './SearchButton'
 import { SvgIcon } from './SvgIcon'
 /**
  * 顶部导航
  */
 const Nav = props => {
-  const { post, fullWidth, siteInfo } = props
+  const { siteInfo } = props
   const autoCollapseNavBar = siteConfig(
     'NOBELIUM_AUTO_COLLAPSE_NAV_BAR',
     true,
@@ -46,11 +43,10 @@ const Nav = props => {
     <>
       <div className='observer-element h-4 md:h-12' ref={sentinalRef}></div>
       <div
-        className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${
-          !fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
-        }`}
+        className='sticky-nav m-auto w-full h-6 max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60'
         id='sticky-nav'
-        ref={navRef}>
+        ref={navRef}
+      >
         <div className='flex items-center'>
           <SmartLink href='/' aria-label={siteConfig('TITLE')}>
             <div className='h-6 w-6'>
@@ -67,16 +63,9 @@ const Nav = props => {
               )}
             </div>
           </SmartLink>
-          {post ? (
-            <p className='ml-2 max-h-12 line-clamp-2 overflow-ellipsis font-medium text-gray-800 dark:text-gray-300 header-name'>
-              {post?.title}
-            </p>
-          ) : (
-            <p className='logo line-clamp-1 overflow-ellipsis ml-2 font-medium text-gray-800 dark:text-gray-300 header-name whitespace-nowrap'>
-              {siteConfig('TITLE')}
-              {/* ,{' '}<span className="font-normal">{siteConfig('DESCRIPTION')}</span> */}
-            </p>
-          )}
+          <p className='logo line-clamp-1 overflow-ellipsis ml-2 font-medium text-gray-800 dark:text-gray-300 header-name whitespace-nowrap'>
+            {siteConfig('TITLE')}
+          </p>
         </div>
         <NavBar {...props} />
       </div>
@@ -85,84 +74,54 @@ const Nav = props => {
 }
 
 const NavBar = props => {
-  const { customMenu, customNav } = props
   const [isOpen, changeOpen] = useState(false)
+  const router = useRouter()
   const toggleOpen = () => {
     changeOpen(!isOpen)
   }
   const collapseRef = useRef(null)
-
-  const { locale } = useGlobal()
-  let links = [
-    {
-      id: 2,
-      name: locale.NAV.RSS,
-      href: '/feed',
-      show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS'),
-      target: '_blank'
-    },
-    {
-      icon: 'fas fa-search',
-      name: locale.NAV.SEARCH,
-      href: '/search',
-      show: siteConfig('NOBELIUM_MENU_SEARCH')
-    },
-    {
-      icon: 'fas fa-archive',
-      name: locale.NAV.ARCHIVE,
-      href: '/archive',
-      show: siteConfig('NOBELIUM_MENU_ARCHIVE')
-    },
-    {
-      icon: 'fas fa-folder',
-      name: locale.COMMON.CATEGORY,
-      href: '/category',
-      show: siteConfig('NOBELIUM_MENU_CATEGORY')
-    },
-    {
-      icon: 'fas fa-tag',
-      name: locale.COMMON.TAGS,
-      href: '/tag',
-      show: siteConfig('NOBELIUM_MENU_TAG')
-    }
-  ]
-  if (customNav) {
-    links = links.concat(customNav)
-  }
-
-  // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU') && customMenu?.length > 0) {
-    links = customMenu
-  }
-
-  if (!links || links.length === 0) {
-    return null
-  }
+  const isActive = href =>
+    href === '/' ? router.pathname === '/' : router.pathname.startsWith(href)
 
   return (
-    <div className='flex-shrink-0 flex'>
-      <ul className='hidden md:flex flex-row'>
-        {links?.map((link, index) => (
-          <MenuItemDrop key={index} link={link} />
-        ))}
-      </ul>
+    <div className='flex-shrink-0 flex items-center gap-1'>
+      <nav className='hidden md:block' aria-label='主导航'>
+        <ul className='flex flex-row items-center gap-1'>
+          {LEO_NAV_ITEMS.map(link => (
+            <li key={link.href}>
+              <SmartLink
+                href={link.href}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={`leo-nav-link ${isActive(link.href) ? 'is-active' : ''}`}
+              >
+                {link.name}
+              </SmartLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <div className='md:hidden'>
         <Collapse
           collapseRef={collapseRef}
           isOpen={isOpen}
           type='vertical'
-          className='fixed top-16 right-6'>
-          <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
-            {links?.map((link, index) => (
-              <MenuItemCollapse
-                key={index}
-                link={link}
-                onHeightChange={param =>
-                  collapseRef.current?.updateCollapseHeight(param)
-                }
-              />
-            ))}
-          </div>
+          className='leo-mobile-menu fixed top-16 left-4 right-4'
+        >
+          <nav id='leo-mobile-navigation' aria-label='移动端主导航'>
+            <ul>
+              {LEO_NAV_ITEMS.map(link => (
+                <li key={link.href}>
+                  <SmartLink
+                    href={link.href}
+                    aria-current={isActive(link.href) ? 'page' : undefined}
+                    onClick={() => changeOpen(false)}
+                  >
+                    {link.name}
+                  </SmartLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </Collapse>
       </div>
 
@@ -170,13 +129,19 @@ const NavBar = props => {
         <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full' />
       )}
 
-      {siteConfig('NOBELIUM_MENU_RANDOM_POST') && (
-        <RandomPostButton {...props} />
-      )}
-      {siteConfig('NOBELIUM_MENU_SEARCH_BUTTON') && <SearchButton {...props} />}
-      <i
+      <button
+        type='button'
         onClick={toggleOpen}
-        className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
+        className='leo-menu-button md:hidden'
+        aria-label={isOpen ? '关闭导航菜单' : '打开导航菜单'}
+        aria-expanded={isOpen}
+        aria-controls='leo-mobile-navigation'
+      >
+        <i
+          className={`fas ${isOpen ? 'fa-times' : 'fa-bars'}`}
+          aria-hidden='true'
+        />
+      </button>
     </div>
   )
 }

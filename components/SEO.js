@@ -374,8 +374,12 @@ const getIsoTime = value => {
  * @param {*} router
  */
 const getSEOMeta = (props, router, locale) => {
-  const { post, siteInfo, tag, category, page } = props
+  const { post, siteInfo, tag, category, page, seoMeta } = props
   const keyword = router?.query?.s
+
+  if (seoMeta) {
+    return seoMeta
+  }
 
   const TITLE = siteConfig('TITLE')
   switch (router.route) {
