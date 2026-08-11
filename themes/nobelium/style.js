@@ -74,6 +74,7 @@ const Style = () => {
         position: fixed;
         inset: 0;
         z-index: 60;
+        overflow: hidden;
         visibility: hidden;
         pointer-events: none;
       }

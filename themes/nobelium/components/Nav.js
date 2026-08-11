@@ -5,6 +5,7 @@ import SmartLink from '@/components/SmartLink'
 import { LEO_NAV_ITEMS } from '@/lib/site/leoBrandContent'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import CONFIG from '../config'
 import { SvgIcon } from './SvgIcon'
 /**
@@ -74,6 +75,7 @@ const Nav = props => {
 
 const NavBar = () => {
   const [isOpen, changeOpen] = useState(false)
+  const [isMounted, setMounted] = useState(false)
   const router = useRouter()
   const menuButtonRef = useRef(null)
   const closeButtonRef = useRef(null)
@@ -82,6 +84,10 @@ const NavBar = () => {
   }
   const isActive = href =>
     href === '/' ? router.pathname === '/' : router.pathname.startsWith(href)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!isOpen) return
@@ -124,53 +130,57 @@ const NavBar = () => {
           ))}
         </ul>
       </nav>
-      <div
-        className={`leo-mobile-menu-layer md:hidden ${isOpen ? 'is-open' : ''}`}
-        aria-hidden={!isOpen}
-      >
-        <button
-          type='button'
-          className='leo-mobile-menu-backdrop'
-          onClick={() => changeOpen(false)}
-          aria-label='关闭导航菜单'
-          tabIndex={isOpen ? 0 : -1}
-        />
-        <nav
-          id='leo-mobile-navigation'
-          className='leo-mobile-menu'
-          aria-label='移动端主导航'
-        >
-          <button
-            ref={closeButtonRef}
-            type='button'
-            className='leo-mobile-panel-close'
-            onClick={() => changeOpen(false)}
-            aria-label='关闭导航菜单'
+      {isMounted &&
+        createPortal(
+          <div
+            className={`leo-mobile-menu-layer md:hidden ${isOpen ? 'is-open' : ''}`}
+            aria-hidden={!isOpen}
           >
-            <span aria-hidden='true'>×</span>
-          </button>
-          <div className='leo-mobile-menu-kicker'>
-            <span>LEO DIGITAL LAB</span>
-            <small>AI AUTOMATION × ENGINEERING AI</small>
-          </div>
-          <ul>
-            {LEO_NAV_ITEMS.map((link, index) => (
-              <li key={link.href}>
-                <SmartLink
-                  href={link.href}
-                  aria-current={isActive(link.href) ? 'page' : undefined}
-                  onClick={() => changeOpen(false)}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  {link.name}
-                  <i aria-hidden='true'>↗</i>
-                </SmartLink>
-              </li>
-            ))}
-          </ul>
-          <p>Build Your Digital Future.</p>
-        </nav>
-      </div>
+            <button
+              type='button'
+              className='leo-mobile-menu-backdrop'
+              onClick={() => changeOpen(false)}
+              aria-label='关闭导航菜单'
+              tabIndex={isOpen ? 0 : -1}
+            />
+            <nav
+              id='leo-mobile-navigation'
+              className='leo-mobile-menu'
+              aria-label='移动端主导航'
+            >
+              <button
+                ref={closeButtonRef}
+                type='button'
+                className='leo-mobile-panel-close'
+                onClick={() => changeOpen(false)}
+                aria-label='关闭导航菜单'
+              >
+                <span aria-hidden='true'>×</span>
+              </button>
+              <div className='leo-mobile-menu-kicker'>
+                <span>LEO DIGITAL LAB</span>
+                <small>AI AUTOMATION × ENGINEERING AI</small>
+              </div>
+              <ul>
+                {LEO_NAV_ITEMS.map((link, index) => (
+                  <li key={link.href}>
+                    <SmartLink
+                      href={link.href}
+                      aria-current={isActive(link.href) ? 'page' : undefined}
+                      onClick={() => changeOpen(false)}
+                    >
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      {link.name}
+                      <i aria-hidden='true'>↗</i>
+                    </SmartLink>
+                  </li>
+                ))}
+              </ul>
+              <p>Build Your Digital Future.</p>
+            </nav>
+          </div>,
+          document.body
+        )}
 
       {siteConfig('NOBELIUM_MENU_DARKMODE_BUTTON') && (
         <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full' />
