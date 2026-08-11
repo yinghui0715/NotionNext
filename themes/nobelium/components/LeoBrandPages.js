@@ -1,4 +1,3 @@
-import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import { resolveContactEmail } from '@/lib/plugins/mailEncrypt'
@@ -191,11 +190,14 @@ export const ContactPage = () => {
             </div>
             {wechatName && wechatQr && (
               <figure className='leo-wechat-card'>
-                <LazyImage
-                  priority
+                {/* The QR code is a small local asset and should be immediately scannable. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={wechatQr}
                   width={1280}
                   height={1280}
+                  loading='eager'
+                  decoding='async'
                   className='leo-wechat-qr'
                   alt={`${wechatName}微信公众号二维码`}
                 />
