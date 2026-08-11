@@ -22,14 +22,17 @@ const DarkModeButton = props => {
 
   return (
     <div
-      className={`${className || ''} flex justify-center dark:text-gray-200 text-gray-800`}>
-      <div
+      className={`${className || ''} flex justify-center dark:text-gray-200 text-gray-800`}
+    >
+      <button
+        type='button'
         onClick={toggleDarkMode}
-        id='darkModeButton'
-        className=' hover:scale-110 cursor-pointer transform duration-200 w-5 h-5'>
+        className='hover:scale-110 cursor-pointer transform duration-200 w-8 h-8 p-1.5 rounded-full'
+        aria-label={isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
+      >
         {' '}
         {isDarkMode ? <Sun /> : <Moon />}
-      </div>
+      </button>
     </div>
   )
 }

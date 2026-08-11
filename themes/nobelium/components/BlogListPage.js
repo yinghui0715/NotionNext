@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import BlogPost from './BlogPost'
 
 export const BlogListPage = props => {
-  const { page = 1, posts, postCount } = props
+  const { page = 1, posts, postCount, variant } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const { NOTION_CONFIG } = useGlobal()
@@ -20,6 +20,28 @@ export const BlogListPage = props => {
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
     .replace('.html', '')
+
+  if (variant === 'home') {
+    return (
+      <section className='leo-articles-section' aria-label='最新文章'>
+        <div
+          id='posts-wrapper'
+          className={`leo-article-grid ${posts?.length === 1 ? 'is-single' : ''}`}
+        >
+          {posts?.length > 0 ? (
+            posts.map(post => (
+              <BlogPost key={post.id} post={post} variant='home' />
+            ))
+          ) : (
+            <p className='leo-empty-state'>最新文章正在整理中。</p>
+          )}
+        </div>
+        <SmartLink href='/archive' className='leo-section-link'>
+          查看全部文章 <span aria-hidden='true'>↗</span>
+        </SmartLink>
+      </section>
+    )
+  }
 
   return (
     <div className='w-full md:pr-12 my-6'>
@@ -38,7 +60,8 @@ export const BlogListPage = props => {
                 : `${pagePrefix}/page/${currentPage - 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          className={`${showPrev ? '  ' : ' invisible block pointer-events-none '}no-underline py-2 px-3 rounded`}>
+          className={`${showPrev ? '  ' : ' invisible block pointer-events-none '}no-underline py-2 px-3 rounded`}
+        >
           <button rel='prev' className='block cursor-pointer'>
             ← {locale.PAGINATION.PREV}
           </button>
@@ -48,7 +71,8 @@ export const BlogListPage = props => {
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          className={`${showNext ? '  ' : 'invisible pointer-events-none '}  no-underline py-2 px-3 rounded`}>
+          className={`${showNext ? '  ' : 'invisible pointer-events-none '}  no-underline py-2 px-3 rounded`}
+        >
           <button rel='next' className='block cursor-pointer'>
             {locale.PAGINATION.NEXT} →
           </button>

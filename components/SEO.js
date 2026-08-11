@@ -239,7 +239,8 @@ const SEO = props => {
               image,
               AUTHOR,
               LINK,
-              BRAND_NAME
+              BRAND_NAME,
+              keywords
             )
           )
         }}
@@ -288,7 +289,8 @@ export const generateStructuredData = (
   image,
   author,
   siteUrl,
-  publisherName = siteInfo?.title
+  publisherName = siteInfo?.title,
+  keywords = Array.isArray(meta?.tags) ? meta.tags.join(', ') : meta?.tags
 ) => {
   const baseData = {
     '@context': 'https://schema.org',
@@ -307,7 +309,8 @@ export const generateStructuredData = (
         '@type': 'ImageObject',
         url: getAbsoluteImageUrl(siteInfo?.icon, siteUrl)
       }
-    }
+    },
+    keywords
   }
 
   // 如果是文章页面，添加文章结构化数据
@@ -337,7 +340,7 @@ export const generateStructuredData = (
         '@type': 'WebPage',
         '@id': url
       },
-      keywords: meta.tags?.join(', '),
+      keywords,
       articleSection: meta.category
     }
   }
@@ -372,14 +375,18 @@ const getIsoTime = value => {
  * @param {*} router
  */
 const getSEOMeta = (props, router, locale) => {
-  const { post, siteInfo, tag, category, page } = props
+  const { post, siteInfo, tag, category, page, seoMeta } = props
   const keyword = router?.query?.s
+
+  if (seoMeta) {
+    return seoMeta
+  }
 
   const TITLE = siteConfig('TITLE')
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | ${siteInfo?.description}`,
+        title: `${siteInfo?.title} | AI Automation × Engineering AI`,
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: '',
