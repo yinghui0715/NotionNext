@@ -1,4 +1,3 @@
-import Collapse from '@/components/Collapse'
 import DarkModeButton from '@/components/DarkModeButton'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
@@ -73,15 +72,40 @@ const Nav = props => {
   )
 }
 
-const NavBar = props => {
+const NavBar = () => {
   const [isOpen, changeOpen] = useState(false)
   const router = useRouter()
+  const menuButtonRef = useRef(null)
+  const closeButtonRef = useRef(null)
   const toggleOpen = () => {
     changeOpen(!isOpen)
   }
-  const collapseRef = useRef(null)
   const isActive = href =>
     href === '/' ? router.pathname === '/' : router.pathname.startsWith(href)
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') {
+        changeOpen(false)
+        window.setTimeout(() => menuButtonRef.current?.focus(), 0)
+      }
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.setTimeout(() => closeButtonRef.current?.focus(), 0)
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    changeOpen(false)
+  }, [router.asPath])
 
   return (
     <div className='flex-shrink-0 flex items-center gap-1'>
@@ -100,29 +124,52 @@ const NavBar = props => {
           ))}
         </ul>
       </nav>
-      <div className='md:hidden'>
-        <Collapse
-          collapseRef={collapseRef}
-          isOpen={isOpen}
-          type='vertical'
-          className='leo-mobile-menu fixed top-16 left-4 right-4'
+      <div
+        className={`leo-mobile-menu-layer md:hidden ${isOpen ? 'is-open' : ''}`}
+        aria-hidden={!isOpen}
+      >
+        <button
+          type='button'
+          className='leo-mobile-menu-backdrop'
+          onClick={() => changeOpen(false)}
+          aria-label='关闭导航菜单'
+          tabIndex={isOpen ? 0 : -1}
+        />
+        <nav
+          id='leo-mobile-navigation'
+          className='leo-mobile-menu'
+          aria-label='移动端主导航'
         >
-          <nav id='leo-mobile-navigation' aria-label='移动端主导航'>
-            <ul>
-              {LEO_NAV_ITEMS.map(link => (
-                <li key={link.href}>
-                  <SmartLink
-                    href={link.href}
-                    aria-current={isActive(link.href) ? 'page' : undefined}
-                    onClick={() => changeOpen(false)}
-                  >
-                    {link.name}
-                  </SmartLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </Collapse>
+          <button
+            ref={closeButtonRef}
+            type='button'
+            className='leo-mobile-panel-close'
+            onClick={() => changeOpen(false)}
+            aria-label='关闭导航菜单'
+          >
+            <span aria-hidden='true'>×</span>
+          </button>
+          <div className='leo-mobile-menu-kicker'>
+            <span>LEO DIGITAL LAB</span>
+            <small>AI AUTOMATION × ENGINEERING AI</small>
+          </div>
+          <ul>
+            {LEO_NAV_ITEMS.map((link, index) => (
+              <li key={link.href}>
+                <SmartLink
+                  href={link.href}
+                  aria-current={isActive(link.href) ? 'page' : undefined}
+                  onClick={() => changeOpen(false)}
+                >
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {link.name}
+                  <i aria-hidden='true'>↗</i>
+                </SmartLink>
+              </li>
+            ))}
+          </ul>
+          <p>Build Your Digital Future.</p>
+        </nav>
       </div>
 
       {siteConfig('NOBELIUM_MENU_DARKMODE_BUTTON') && (
@@ -130,6 +177,7 @@ const NavBar = props => {
       )}
 
       <button
+        ref={menuButtonRef}
         type='button'
         onClick={toggleOpen}
         className='leo-menu-button md:hidden'

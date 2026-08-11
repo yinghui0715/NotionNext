@@ -10,6 +10,46 @@ import LeoProjectCard from './LeoProjectCard'
 
 const Arrow = () => <span aria-hidden='true'>↗</span>
 
+const HeroVisual = () => (
+  <div
+    className='leo-hero-visual'
+    role='img'
+    aria-label='Engineering AI 从项目输入到审查、判断与执行的抽象流程图'
+  >
+    <div className='leo-hero-visual-header'>
+      <span>ENGINEERING AI / LIVE BUILD</span>
+      <span className='leo-visual-live'>BUILDING</span>
+    </div>
+    <div className='leo-hero-visual-canvas' aria-hidden='true'>
+      <div className='leo-visual-source'>
+        <span>PROJECT INPUT</span>
+        <i />
+        <i />
+        <i />
+      </div>
+      <div className='leo-visual-connector'>
+        <i />
+        <i />
+        <i />
+      </div>
+      <div className='leo-visual-agent'>
+        <span>AI AGENT</span>
+        <strong>REVIEW</strong>
+        <small>COMPARE · REASON · FLAG</small>
+      </div>
+      <div className='leo-visual-output'>
+        <span>OUTPUT</span>
+        <b>12</b>
+        <small>DECISIONS READY</small>
+      </div>
+    </div>
+    <div className='leo-hero-visual-footer'>
+      <span>Human review remains in the loop.</span>
+      <span>01 / 03</span>
+    </div>
+  </div>
+)
+
 const FocusItem = ({ index, title, description }) => (
   <article className='leo-focus-item'>
     <span className='leo-focus-index'>{index}</span>
@@ -32,29 +72,35 @@ const LeoHomeIntro = () => {
   return (
     <>
       <section className='leo-hero' aria-labelledby='leo-home-title'>
-        <p className='leo-home-eyebrow'>
-          {siteConfig('NOBELIUM_LEO_EYEBROW', null, CONFIG)}
-        </p>
-        <h1 id='leo-home-title'>
-          {siteConfig('NOBELIUM_LEO_TITLE', null, CONFIG)}
-        </h1>
-        <p className='leo-home-description'>
-          {siteConfig('NOBELIUM_LEO_DESCRIPTION', null, CONFIG)}
-        </p>
-        <div className='leo-hero-actions' aria-label='首屏操作'>
-          <SmartLink href='/projects' className='leo-button leo-button-primary'>
-            查看项目
-          </SmartLink>
-          <SmartLink
-            href='/#start-here'
-            className='leo-button leo-button-secondary'
-          >
-            从这里开始
-          </SmartLink>
-          <SmartLink href='/about' className='leo-text-link leo-about-link'>
-            了解 Leo <Arrow />
-          </SmartLink>
+        <div className='leo-hero-copy'>
+          <p className='leo-home-eyebrow'>
+            {siteConfig('NOBELIUM_LEO_EYEBROW', null, CONFIG)}
+          </p>
+          <h1 id='leo-home-title'>
+            {siteConfig('NOBELIUM_LEO_TITLE', null, CONFIG)}
+          </h1>
+          <p className='leo-home-description'>
+            {siteConfig('NOBELIUM_LEO_DESCRIPTION', null, CONFIG)}
+          </p>
+          <div className='leo-hero-actions' aria-label='首屏操作'>
+            <SmartLink
+              href='/projects'
+              className='leo-button leo-button-primary'
+            >
+              查看项目
+            </SmartLink>
+            <SmartLink
+              href='/#start-here'
+              className='leo-button leo-button-secondary'
+            >
+              从这里开始
+            </SmartLink>
+            <SmartLink href='/about' className='leo-text-link leo-about-link'>
+              了解 Leo <Arrow />
+            </SmartLink>
+          </div>
         </div>
+        <HeroVisual />
         <p className='leo-slogan'>Build Your Digital Future.</p>
       </section>
 

@@ -24,7 +24,10 @@ export const BlogListPage = props => {
   if (variant === 'home') {
     return (
       <section className='leo-articles-section' aria-label='最新文章'>
-        <div id='posts-wrapper' className='leo-article-grid'>
+        <div
+          id='posts-wrapper'
+          className={`leo-article-grid ${posts?.length === 1 ? 'is-single' : ''}`}
+        >
           {posts?.length > 0 ? (
             posts.map(post => (
               <BlogPost key={post.id} post={post} variant='home' />

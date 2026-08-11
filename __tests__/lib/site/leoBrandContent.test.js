@@ -22,6 +22,9 @@ describe('Leo brand content', () => {
       'Case Study',
       'Prototype'
     ])
+    expect(new Set(LEO_PROJECTS.map(project => project.visual)).size).toBe(
+      LEO_PROJECTS.length
+    )
     expect(getLeoProject(slugs[0])).toEqual(LEO_PROJECTS[0])
   })
 

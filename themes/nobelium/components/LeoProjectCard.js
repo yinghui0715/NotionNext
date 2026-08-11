@@ -1,24 +1,83 @@
 import SmartLink from '@/components/SmartLink'
 
+const ProjectVisual = ({ project }) => (
+  <div
+    className={`leo-project-visual is-${project.visual}`}
+    role='img'
+    aria-label={`${project.title} 抽象流程示意图`}
+  >
+    <div className='leo-project-visual-header'>
+      <span>{project.visualLabel}</span>
+      <span aria-hidden='true'>•••</span>
+    </div>
+    <div className='leo-project-visual-stage' aria-hidden='true'>
+      {project.visual === 'quotation' && (
+        <>
+          <div className='leo-quote-sheet'>
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className='leo-review-panel'>
+            <span>12 MATCH</span>
+            <span>03 REVIEW</span>
+            <span>01 RISK</span>
+          </div>
+        </>
+      )}
+      {project.visual === 'estimation' && (
+        <>
+          <div className='leo-estimate-bars'>
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className='leo-estimate-total'>
+            <span>ENGINEERING</span>
+            <strong>42.5</strong>
+            <small>EFFORT UNITS</small>
+          </div>
+        </>
+      )}
+      {project.visual === 'operations' && (
+        <div className='leo-flow-map'>
+          <span>OFFER</span>
+          <i />
+          <span>BOM</span>
+          <i />
+          <span>REVIEW</span>
+          <i />
+          <span>DELIVERY</span>
+        </div>
+      )}
+    </div>
+  </div>
+)
+
 const LeoProjectCard = ({ project }) => (
   <article className='leo-project-card'>
-    <div className='leo-project-meta'>
-      <span className='leo-status'>{project.status}</span>
+    <ProjectVisual project={project} />
+    <div className='leo-project-card-body'>
+      <div className='leo-project-meta'>
+        <span className='leo-status'>{project.status}</span>
+      </div>
+      <h3>{project.title}</h3>
+      <p>{project.summary}</p>
+      <div className='leo-tag-list' aria-label='项目分类'>
+        {project.category.map(category => (
+          <span key={category}>{category}</span>
+        ))}
+      </div>
+      <SmartLink
+        href={`/projects/${project.slug}`}
+        className='leo-text-link'
+        aria-label={`查看项目：${project.title}`}
+      >
+        查看项目 <span aria-hidden='true'>↗</span>
+      </SmartLink>
     </div>
-    <h3>{project.title}</h3>
-    <p>{project.summary}</p>
-    <div className='leo-tag-list' aria-label='项目分类'>
-      {project.category.map(category => (
-        <span key={category}>{category}</span>
-      ))}
-    </div>
-    <SmartLink
-      href={`/projects/${project.slug}`}
-      className='leo-text-link'
-      aria-label={`查看项目：${project.title}`}
-    >
-      查看项目 <span aria-hidden='true'>↗</span>
-    </SmartLink>
   </article>
 )
 

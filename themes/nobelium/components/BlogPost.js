@@ -1,5 +1,6 @@
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
@@ -14,21 +15,45 @@ const BlogPost = ({ post, variant }) => {
   if (variant === 'home') {
     return (
       <article className='leo-article-card'>
-        <div className='leo-article-meta'>
-          <span>{post?.category || post?.series || '文章'}</span>
-          <time dateTime={post?.publishDay}>{post?.publishDay}</time>
-        </div>
-        <h2>
-          <SmartLink href={post?.href}>{displayTitle}</SmartLink>
-        </h2>
-        {post?.summary && <p>{post.summary}</p>}
         <SmartLink
           href={post?.href}
-          className='leo-text-link'
+          className={`leo-article-visual ${post?.pageCoverThumbnail ? 'has-cover' : 'is-fallback'}`}
           aria-label={`阅读文章：${displayTitle}`}
         >
-          阅读文章 <span aria-hidden='true'>↗</span>
+          {post?.pageCoverThumbnail ? (
+            <LazyImage
+              src={post.pageCoverThumbnail}
+              alt={`${displayTitle}文章封面`}
+              width={720}
+              height={405}
+              className='leo-article-cover-image'
+            />
+          ) : (
+            <div className='leo-article-fallback-visual' aria-hidden='true'>
+              <span>DAILY INTELLIGENCE</span>
+              <strong>AI / SYSTEMS</strong>
+              <i />
+              <small>FIELD NOTES · {post?.publishDay || 'LATEST'}</small>
+            </div>
+          )}
         </SmartLink>
+        <div className='leo-article-card-body'>
+          <div className='leo-article-meta'>
+            <span>{post?.category || post?.series || '文章'}</span>
+            <time dateTime={post?.publishDay}>{post?.publishDay}</time>
+          </div>
+          <h2>
+            <SmartLink href={post?.href}>{displayTitle}</SmartLink>
+          </h2>
+          {post?.summary && <p>{post.summary}</p>}
+          <SmartLink
+            href={post?.href}
+            className='leo-text-link'
+            aria-label={`阅读文章：${displayTitle}`}
+          >
+            阅读文章 <span aria-hidden='true'>↗</span>
+          </SmartLink>
+        </div>
       </article>
     )
   }
