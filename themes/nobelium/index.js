@@ -60,6 +60,19 @@ const LayoutBase = props => {
   const [filterKey, setFilterKey] = useState('')
   const topSlot = <BlogListBar {...props} />
 
+  useEffect(() => {
+    const removeDuplicateThemeRoots = () => {
+      const roots = document.querySelectorAll('#theme-nobelium')
+      roots.forEach((root, index) => {
+        if (index < roots.length - 1) root.remove()
+      })
+    }
+
+    removeDuplicateThemeRoots()
+    const timer = window.setTimeout(removeDuplicateThemeRoots, 250)
+    return () => window.clearTimeout(timer)
+  }, [])
+
   return (
     <ThemeGlobalNobelium.Provider
       value={{ searchModal, filterKey, setFilterKey }}

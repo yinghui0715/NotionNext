@@ -30,15 +30,31 @@ export const ProjectsPage = () => (
 )
 
 const projectRows = [
-  ['背景', 'problem'],
+  ['背景', 'background'],
+  ['要解决的问题', 'problem'],
   ['原有流程', 'previousWorkflow'],
   ['解决方案', 'solution'],
   ['工作流程或架构', 'architecture'],
-  ['Demo 或截图', 'process'],
+  ['处理流程', 'process'],
+  ['Demo 或截图', 'demo'],
   ['当前结果', 'result'],
   ['局限与风险', 'limitations'],
   ['下一步计划', 'nextStep']
 ]
+
+const ProjectDetailValue = ({ value }) => {
+  if (Array.isArray(value)) {
+    return (
+      <ol className='leo-project-detail-list'>
+        {value.map(item => (
+          <li key={item}>{item}</li>
+        ))}
+      </ol>
+    )
+  }
+
+  return value || '公开版本正在整理中。'
+}
 
 export const ProjectDetailPage = ({ project }) => (
   <article className='leo-page'>
@@ -59,7 +75,9 @@ export const ProjectDetailPage = ({ project }) => (
         {projectRows.map(([label, key]) => (
           <div className='leo-project-detail-row' key={key}>
             <dt>{label}</dt>
-            <dd>{project[key] || '公开版本正在整理中。'}</dd>
+            <dd>
+              <ProjectDetailValue value={project[key]} />
+            </dd>
           </div>
         ))}
       </dl>

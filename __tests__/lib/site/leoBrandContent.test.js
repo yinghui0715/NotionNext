@@ -28,6 +28,17 @@ describe('Leo brand content', () => {
     expect(getLeoProject(slugs[0])).toEqual(LEO_PROJECTS[0])
   })
 
+  it('documents the quotation review project without claiming results', () => {
+    const project = getLeoProject('ai-supplier-quotation-review-agent')
+
+    expect(project.previousWorkflow.length).toBeGreaterThan(2)
+    expect(project.architecture.length).toBeGreaterThan(3)
+    expect(project.process.length).toBeGreaterThan(3)
+    expect(project.nextStep.length).toBeGreaterThan(2)
+    expect(project.demo).toContain('Synthetic Data')
+    expect(project.result).toContain('尚未提供可验证 Demo')
+  })
+
   it('removes decorative leading emoji without changing the source title', () => {
     expect(stripLeadingArticleEmoji('🗞️📬 Leo Daily Intelligence')).toBe(
       'Leo Daily Intelligence'
