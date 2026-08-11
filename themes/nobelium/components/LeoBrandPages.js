@@ -192,6 +192,7 @@ export const ContactPage = () => {
             {wechatName && wechatQr && (
               <figure className='leo-wechat-card'>
                 <LazyImage
+                  priority
                   src={wechatQr}
                   width={1280}
                   height={1280}
