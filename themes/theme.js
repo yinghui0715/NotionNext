@@ -192,6 +192,7 @@ const getCurrentTheme = (router, fallbackTheme) => {
 export const getBaseLayoutByTheme = theme => {
   const normalizedTheme = normalizeThemeName(theme)
   if (baseLayoutCache.has(normalizedTheme)) {
+    scheduleFixThemeDOM()
     return baseLayoutCache.get(normalizedTheme)
   }
   const DynamicBaseLayout = dynamic(
@@ -200,6 +201,7 @@ export const getBaseLayoutByTheme = theme => {
     { ssr: true }
   )
   baseLayoutCache.set(normalizedTheme, DynamicBaseLayout)
+  scheduleFixThemeDOM()
   return DynamicBaseLayout
 }
 
