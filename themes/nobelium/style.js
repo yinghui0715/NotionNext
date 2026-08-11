@@ -1205,6 +1205,51 @@ const Style = () => {
         font-size: 0.95rem;
       }
 
+      .leo-contact-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem);
+        gap: clamp(1.5rem, 5vw, 3rem);
+        align-items: start;
+        margin-top: 1.25rem;
+      }
+
+      .leo-contact-methods > p {
+        margin-bottom: 1.25rem;
+      }
+
+      .leo-wechat-card {
+        margin: 0;
+        padding: 0.8rem;
+        border: 1px solid var(--leo-line);
+        border-radius: var(--leo-radius);
+        background: var(--leo-card);
+      }
+
+      .leo-wechat-qr {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: calc(var(--leo-radius) - 0.35rem);
+        background: #fff;
+      }
+
+      .leo-wechat-card figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding: 0.85rem 0.25rem 0.2rem;
+      }
+
+      .leo-wechat-card strong {
+        color: var(--leo-ink);
+        font-size: 0.95rem;
+      }
+
+      .leo-wechat-card span {
+        color: var(--leo-muted);
+        font-size: 0.78rem;
+      }
+
       .leo-project-detail {
         display: grid;
         grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 0.6fr);
@@ -1346,6 +1391,14 @@ const Style = () => {
         .leo-article-grid,
         .leo-page-grid {
           grid-template-columns: 1fr;
+        }
+
+        .leo-contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .leo-wechat-card {
+          width: min(100%, 18rem);
         }
 
         .leo-section-heading,

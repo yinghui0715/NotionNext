@@ -1,5 +1,7 @@
+import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
+import { resolveContactEmail } from '@/lib/plugins/mailEncrypt'
 import { LEO_PROJECTS } from '@/lib/site/leoBrandContent'
 import LeoProjectCard from './LeoProjectCard'
 
@@ -127,7 +129,11 @@ export const AboutPage = () => (
 )
 
 export const ContactPage = () => {
+  const email = resolveContactEmail(siteConfig('CONTACT_EMAIL'))
+  const wechatName = siteConfig('CONTACT_WECHAT_NAME')
+  const wechatQr = siteConfig('CONTACT_WECHAT_QR')
   const channels = [
+    [email, email ? `mailto:${email}` : ''],
     ['GitHub', siteConfig('CONTACT_GITHUB')],
     ['LinkedIn', siteConfig('CONTACT_LINKEDIN')],
     ['X / Twitter', siteConfig('CONTACT_TWITTER')]
@@ -154,25 +160,52 @@ export const ContactPage = () => {
             请不要发送客户机密、未脱敏报价、设备序列号或公司内部文件。可以先用匿名化的流程描述说明问题。
           </p>
         </section>
-        <section>
+        <section className='leo-contact-section'>
           <h2>公开联系方式</h2>
-          {channels.length > 0 ? (
-            <div className='leo-hero-actions'>
-              {channels.map(([label, href]) => (
-                <SmartLink
-                  key={label}
-                  href={href}
-                  className='leo-button leo-button-secondary'
-                >
-                  {label}
-                </SmartLink>
-              ))}
+          <div className='leo-contact-grid'>
+            <div className='leo-contact-methods'>
+              <p>
+                欢迎通过邮箱交流具体问题。请简单说明背景、现有流程和期望结果。
+              </p>
+              <div className='leo-hero-actions'>
+                {channels.map(([label, href]) =>
+                  href.startsWith('mailto:') ? (
+                    <a
+                      key={label}
+                      href={href}
+                      className='leo-button leo-button-secondary'
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <SmartLink
+                      key={label}
+                      href={href}
+                      className='leo-button leo-button-secondary'
+                    >
+                      {label}
+                    </SmartLink>
+                  )
+                )}
+              </div>
             </div>
-          ) : (
-            <p>
-              正式公开联系方式尚待确认。这里暂不展示私人手机号或未确认邮箱；补充公开渠道后可直接通过现有配置启用。
-            </p>
-          )}
+            {wechatName && wechatQr && (
+              <figure className='leo-wechat-card'>
+                <LazyImage
+                  priority
+                  src={wechatQr}
+                  width={1280}
+                  height={1280}
+                  className='leo-wechat-qr'
+                  alt={`${wechatName}微信公众号二维码`}
+                />
+                <figcaption>
+                  <strong>{wechatName}</strong>
+                  <span>微信扫码关注公众号</span>
+                </figcaption>
+              </figure>
+            )}
+          </div>
         </section>
       </div>
     </div>
