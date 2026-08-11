@@ -1278,6 +1278,17 @@ const Style = () => {
         font-size: 0.92rem;
       }
 
+      .leo-project-detail-list {
+        display: grid;
+        gap: 0.55rem;
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      .leo-project-detail-list li {
+        padding-left: 0.2rem;
+      }
+
       .leo-project-aside {
         height: fit-content;
         padding: 1.25rem;
