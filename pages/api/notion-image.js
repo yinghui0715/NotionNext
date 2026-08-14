@@ -19,11 +19,9 @@ export default async function handler(req, res) {
     if (!source) return res.status(404).end('Image not found')
 
     const upstream = await fetch(source)
-    const contentType = upstream.headers.get('content-type') || ''
     const contentLength = Number(upstream.headers.get('content-length'))
     if (
       !upstream.ok ||
-      !contentType.toLowerCase().startsWith('image/') ||
       (Number.isFinite(contentLength) && contentLength > MAX_IMAGE_BYTES)
     ) {
       return res.status(502).end('Image unavailable')
@@ -33,6 +31,12 @@ export default async function handler(req, res) {
     if (bytes.length > MAX_IMAGE_BYTES) {
       return res.status(413).end('Image too large')
     }
+
+    const contentType = detectImageContentType(
+      bytes,
+      upstream.headers.get('content-type')
+    )
+    if (!contentType) return res.status(502).end('Image unavailable')
 
     res.setHeader('Content-Type', contentType)
     res.setHeader('Content-Length', String(bytes.length))
@@ -62,5 +66,41 @@ function isNotionId(value) {
   return (
     typeof value === 'string' &&
     /^[0-9a-f]{32}$/i.test(value.replaceAll('-', ''))
+  )
+}
+
+export function detectImageContentType(bytes, declaredType) {
+  const declared = String(declaredType || '')
+    .split(';')[0]
+    .trim()
+    .toLowerCase()
+  if (declared.startsWith('image/') && declared !== 'image/svg+xml') {
+    return declared
+  }
+
+  if (hasBytes(bytes, [0xff, 0xd8, 0xff])) return 'image/jpeg'
+  if (hasBytes(bytes, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) {
+    return 'image/png'
+  }
+  if (hasAscii(bytes, 0, 'GIF87a') || hasAscii(bytes, 0, 'GIF89a')) {
+    return 'image/gif'
+  }
+  if (hasAscii(bytes, 0, 'RIFF') && hasAscii(bytes, 8, 'WEBP')) {
+    return 'image/webp'
+  }
+  if (hasAscii(bytes, 4, 'ftypavif') || hasAscii(bytes, 4, 'ftypavis')) {
+    return 'image/avif'
+  }
+
+  return null
+}
+
+function hasBytes(bytes, signature) {
+  return signature.every((value, index) => bytes[index] === value)
+}
+
+function hasAscii(bytes, offset, signature) {
+  return [...signature].every(
+    (character, index) => bytes[offset + index] === character.charCodeAt(0)
   )
 }

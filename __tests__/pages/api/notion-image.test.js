@@ -41,6 +41,32 @@ describe('/api/notion-image', () => {
     expect(res.body).toEqual(Buffer.from([1, 2, 3]))
   })
 
+  it('normalizes non-standard Notion JPEG metadata after checking the file signature', async () => {
+    resolvePublishedNotionImage.mockResolvedValue(
+      'https://example.com/image.jpg'
+    )
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      headers: {
+        get: key =>
+          ({
+            'content-type': 'image',
+            'content-length': '4'
+          })[key] || null
+      },
+      arrayBuffer: async () => Uint8Array.from([0xff, 0xd8, 0xff, 0xdb]).buffer
+    })
+    const res = responseMock()
+
+    await handler(
+      { method: 'GET', query: { id: blockId, target: 'block' } },
+      res
+    )
+
+    expect(res.statusCode).toBe(200)
+    expect(res.headers['Content-Type']).toBe('image/jpeg')
+  })
+
   it('rejects invalid ids before calling Notion', async () => {
     const res = responseMock()
     await handler({ method: 'GET', query: { id: 'not-an-id' } }, res)
