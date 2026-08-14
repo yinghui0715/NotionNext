@@ -28,4 +28,16 @@ describe('mapImgUrl for private Content Library images', () => {
       '/api/notion-image?id=3bb1f47a-7611-8115-b743-f3c18d23872f&target=page'
     )
   })
+
+  it('does not trust a URL that only contains a Notion hostname in its path', () => {
+    const url =
+      'https://example.com/secure.notion-static.com/prod-files-secure/image.png'
+
+    expect(
+      mapImgUrl(url, {
+        id: '3bb1f47a-7611-8063-a17b-eee604940aed',
+        type: 'image'
+      })
+    ).toBe(`${url}?t=3bb1f47a-7611-8063-a17b-eee604940aed`)
+  })
 })
