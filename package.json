@@ -1,20 +1,21 @@
 {
-  "name": "notion-next",
+  "name": "leo-digital-lab-website",
   "version": "4.10.8",
+  "private": true,
   "packageManager": "yarn@1.22.22",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "homepage": "https://www.leodigitallab.com",
   "license": "MIT",
   "engines": {
     "node": ">=22 <25"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+    "url": "https://github.com/yinghui0715/NotionNext.git"
   },
   "author": {
-    "name": "tangly",
-    "email": "mail@tangly1024.com",
-    "url": "http://tangly1024.com"
+    "name": "Leo",
+    "email": "liyinghui.cn@outlook.com",
+    "url": "https://www.leodigitallab.com"
   },
   "scripts": {
     "dev": "next dev",
@@ -38,10 +39,6 @@
     "deps:install": "yarn install --frozen-lockfile",
     "deps:check-lockfile": "yarn install --frozen-lockfile && git diff --exit-code yarn.lock",
     "clean": "node scripts/dev-tools.js clean",
-    "docs": "node scripts/dev-tools.js docs",
-    "docs:site:dev": "vitepress dev",
-    "docs:site:build": "vitepress build",
-    "docs:site:preview": "vitepress preview",
     "check-updates": "node scripts/dev-tools.js check-updates",
     "setup-hooks": "node scripts/setup-git-hooks.js install",
     "remove-hooks": "node scripts/setup-git-hooks.js remove",
@@ -132,8 +129,6 @@
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.19",
     "typescript": "5.9.3",
-    "vitepress": "^1.6.3",
-    "vitepress-chat": "^0.0.4",
     "webpack-bundle-analyzer": "^4.5.0",
     "zod": "^4.4.3"
   },
@@ -150,7 +145,6 @@
     "uuid": "^11.1.1"
   },
   "bugs": {
-    "url": "https://github.com/tangly/NotionNext/issues",
-    "email": "tlyong1992@hotmail.com"
+    "url": "https://github.com/yinghui0715/NotionNext/issues"
   }
 }
