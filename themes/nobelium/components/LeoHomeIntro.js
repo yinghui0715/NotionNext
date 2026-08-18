@@ -2,6 +2,7 @@ import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import {
   LEO_FOCUS_AREAS,
+  LEO_POSITIONING,
   LEO_PROJECTS,
   LEO_START_HERE
 } from '@/lib/site/leoBrandContent'
@@ -39,8 +40,8 @@ const HeroVisual = () => (
       </div>
       <div className='leo-visual-output'>
         <span>OUTPUT</span>
-        <b>12</b>
-        <small>DECISIONS READY</small>
+        <b>READY</b>
+        <small>FOR HUMAN REVIEW</small>
       </div>
     </div>
     <div className='leo-hero-visual-footer'>
@@ -73,9 +74,12 @@ const LeoHomeIntro = () => {
     <>
       <section className='leo-hero' aria-labelledby='leo-home-title'>
         <div className='leo-hero-copy'>
-          <p className='leo-home-eyebrow'>
-            {siteConfig('NOBELIUM_LEO_EYEBROW', null, CONFIG)}
-          </p>
+          <div className='leo-hero-kicker'>
+            <p className='leo-home-eyebrow'>
+              {siteConfig('NOBELIUM_LEO_EYEBROW', null, CONFIG)}
+            </p>
+            <span>{LEO_POSITIONING.identity}</span>
+          </div>
           <h1 id='leo-home-title'>
             {siteConfig('NOBELIUM_LEO_TITLE', null, CONFIG)}
           </h1>

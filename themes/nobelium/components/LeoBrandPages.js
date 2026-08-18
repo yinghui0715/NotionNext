@@ -2,14 +2,14 @@ import LazyImage from '@/components/LazyImage'
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import { resolveContactEmail } from '@/lib/plugins/mailEncrypt'
-import { LEO_PROJECTS } from '@/lib/site/leoBrandContent'
+import { LEO_CONTACT_PROMPTS, LEO_PROJECTS } from '@/lib/site/leoBrandContent'
 import LeoProjectCard from './LeoProjectCard'
 
 const PageHeader = ({ eyebrow, title, description, children }) => (
   <header className='leo-page-header'>
     <p className='leo-page-eyebrow'>{eyebrow}</p>
     <h1>{title}</h1>
-    <p>{description}</p>
+    <p className='leo-page-description'>{description}</p>
     {children}
   </header>
 )
@@ -30,19 +30,39 @@ export const ProjectsPage = () => (
 )
 
 const projectRows = [
-  ['背景', 'background'],
-  ['要解决的问题', 'problem'],
-  ['原有流程', 'previousWorkflow'],
-  ['解决方案', 'solution'],
-  ['工作流程或架构', 'architecture'],
-  ['处理流程', 'process'],
-  ['Demo 或截图', 'demo'],
-  ['当前结果', 'result'],
-  ['局限与风险', 'limitations'],
-  ['下一步计划', 'nextStep']
+  { label: '背景', key: 'background', id: 'background' },
+  { label: '要解决的问题', key: 'problem', id: 'problem' },
+  { label: '原有流程', key: 'previousWorkflow', id: 'previous-workflow' },
+  { label: '解决方案', key: 'solution', id: 'solution' },
+  {
+    label: 'AI 与人工责任',
+    key: 'responsibility',
+    id: 'responsibility'
+  },
+  { label: '工作流程或架构', key: 'architecture', id: 'architecture' },
+  { label: '处理流程', key: 'process', id: 'process' },
+  { label: 'Demo 或截图', key: 'demo', id: 'demo' },
+  { label: '当前结果', key: 'result', id: 'result' },
+  { label: '局限与风险', key: 'limitations', id: 'limitations' },
+  { label: '下一步计划', key: 'nextStep', id: 'next-step' }
 ]
 
-const ProjectDetailValue = ({ value }) => {
+const ResponsibilityTable = ({ rows }) => (
+  <div className='leo-responsibility-table'>
+    {rows.map(row => (
+      <div key={row.role}>
+        <strong>{row.role}</strong>
+        <span>{row.scope}</span>
+      </div>
+    ))}
+  </div>
+)
+
+const ProjectDetailValue = ({ detailKey, value }) => {
+  if (detailKey === 'responsibility' && Array.isArray(value)) {
+    return <ResponsibilityTable rows={value} />
+  }
+
   if (Array.isArray(value)) {
     return (
       <ol className='leo-project-detail-list'>
@@ -68,32 +88,49 @@ export const ProjectDetailPage = ({ project }) => (
           <span key={category}>{category}</span>
         ))}
       </div>
+      {project.updatedDate && (
+        <time className='leo-project-updated' dateTime={project.updatedDate}>
+          更新于 {project.updatedDate.replaceAll('-', '.')}
+        </time>
+      )}
     </PageHeader>
 
     <div className='leo-project-detail'>
       <dl>
-        {projectRows.map(([label, key]) => (
-          <div className='leo-project-detail-row' key={key}>
+        {projectRows.map(({ label, key, id }) => (
+          <div className='leo-project-detail-row' id={id} key={key}>
             <dt>{label}</dt>
             <dd>
-              <ProjectDetailValue value={project[key]} />
+              <ProjectDetailValue detailKey={key} value={project[key]} />
             </dd>
           </div>
         ))}
       </dl>
-      <aside className='leo-project-aside'>
-        <p>
-          本页只展示可公开、匿名化的信息，不包含客户名称、公司内部文件、报价或设备序列号。
-        </p>
-        <div className='leo-tag-list' aria-label='技术与方法'>
-          {project.technology.map(item => (
-            <span key={item}>{item}</span>
-          ))}
-        </div>
-        <SmartLink href='/contact' className='leo-button leo-button-primary'>
-          交流类似问题
-        </SmartLink>
-      </aside>
+      <div className='leo-project-side'>
+        <nav className='leo-project-toc' aria-label='项目页面目录'>
+          <p>PAGE CONTENTS</p>
+          <ol>
+            {projectRows.map(({ label, id }) => (
+              <li key={id}>
+                <a href={`#${id}`}>{label}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <aside className='leo-project-aside'>
+          <p>
+            本页只展示可公开、匿名化的信息，不包含客户名称、公司内部文件、报价或设备序列号。
+          </p>
+          <div className='leo-tag-list' aria-label='技术与方法'>
+            {project.technology.map(item => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+          <SmartLink href='/contact' className='leo-button leo-button-primary'>
+            交流类似问题
+          </SmartLink>
+        </aside>
+      </div>
     </div>
   </article>
 )
@@ -150,8 +187,12 @@ export const ContactPage = () => {
   const email = resolveContactEmail(siteConfig('CONTACT_EMAIL'))
   const wechatName = siteConfig('CONTACT_WECHAT_NAME')
   const wechatQr = siteConfig('CONTACT_WECHAT_QR')
+  const emailBody = `你的背景：\n\n当前卡点：\n\n希望得到的结果：\n\n请勿附带未脱敏报价、客户机密、设备序列号、API Key 或公司内部文件。`
+  const emailHref = email
+    ? `mailto:${email}?subject=${encodeURIComponent('Leo 数字工坊｜问题交流')}&body=${encodeURIComponent(emailBody)}`
+    : ''
   const channels = [
-    [email, email ? `mailto:${email}` : ''],
+    [email, emailHref],
     ['GitHub', siteConfig('CONTACT_GITHUB')],
     ['LinkedIn', siteConfig('CONTACT_LINKEDIN')],
     ['X / Twitter', siteConfig('CONTACT_TWITTER')]
@@ -175,8 +216,23 @@ export const ContactPage = () => {
         <section>
           <h2>信息边界</h2>
           <p>
-            请不要发送客户机密、未脱敏报价、设备序列号或公司内部文件。可以先用匿名化的流程描述说明问题。
+            请不要发送客户机密、未脱敏报价、设备序列号、API Key
+            或公司内部文件。可以先用匿名化的流程描述说明问题。
           </p>
+        </section>
+        <section>
+          <h2>发邮件前，建议包含</h2>
+          <ol className='leo-contact-prompts'>
+            {LEO_CONTACT_PROMPTS.map(item => (
+              <li key={item.index}>
+                <span>{item.index}</span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <p>{item.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </section>
         <section className='leo-contact-section'>
           <h2>公开联系方式</h2>

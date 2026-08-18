@@ -230,6 +230,26 @@ const Style = () => {
         min-width: 0;
       }
 
+      .leo-hero-kicker {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.1rem;
+      }
+
+      .leo-hero-kicker .leo-home-eyebrow {
+        margin: 0;
+      }
+
+      .leo-hero-kicker > span {
+        padding-left: 0.75rem;
+        border-left: 1px solid var(--leo-line);
+        color: var(--leo-muted);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+
       .leo-home-eyebrow,
       .leo-section-heading > p,
       .leo-cta > div > p,
@@ -524,7 +544,8 @@ const Style = () => {
         grid-row: 1 / 3;
         grid-column: 2;
         color: #a78bfa;
-        font-size: 2rem;
+        font-size: 0.9rem;
+        letter-spacing: 0.08em;
         line-height: 1;
       }
 
@@ -887,6 +908,42 @@ const Style = () => {
         font-size: 0.9rem;
       }
 
+      .leo-project-meta time {
+        color: var(--leo-muted);
+        font-size: 0.56rem;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+      }
+
+      .leo-project-proof {
+        display: grid;
+        gap: 0;
+        margin: 0 0 1rem;
+        border-top: 1px solid var(--leo-line);
+      }
+
+      .leo-project-proof > div {
+        display: grid;
+        grid-template-columns: 4.5rem minmax(0, 1fr);
+        gap: 0.65rem;
+        padding: 0.65rem 0;
+        border-bottom: 1px solid var(--leo-line);
+      }
+
+      .leo-project-proof dt {
+        color: var(--leo-muted);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .leo-project-proof dd {
+        margin: 0;
+        color: var(--leo-ink);
+        font-size: 0.72rem;
+        line-height: 1.55;
+      }
+
       .leo-tag-list {
         display: flex;
         flex-wrap: wrap;
@@ -1170,9 +1227,16 @@ const Style = () => {
         border-bottom: 1px solid var(--leo-line);
       }
 
-      .leo-page-header > p:last-child {
+      .leo-page-description {
         margin: 1.25rem 0 0;
         font-size: 1rem;
+      }
+
+      .leo-project-updated {
+        display: block;
+        margin-top: -0.65rem;
+        color: var(--leo-muted);
+        font-size: 0.72rem;
       }
 
       .leo-page-grid {
@@ -1215,6 +1279,41 @@ const Style = () => {
 
       .leo-contact-methods > p {
         margin-bottom: 1.25rem;
+      }
+
+      .leo-contact-prompts {
+        display: grid;
+        gap: 0.75rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .leo-contact-prompts li {
+        display: grid;
+        grid-template-columns: 2rem minmax(0, 1fr);
+        gap: 0.8rem;
+        padding: 1rem;
+        border: 1px solid var(--leo-line);
+        border-radius: 0.7rem;
+        background: var(--leo-subtle);
+      }
+
+      .leo-contact-prompts li > span {
+        color: var(--leo-accent);
+        font-size: 0.68rem;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+      }
+
+      .leo-contact-prompts strong {
+        color: var(--leo-ink);
+        font-size: 0.88rem;
+      }
+
+      .leo-contact-prompts p {
+        margin-top: 0.25rem;
+        font-size: 0.83rem;
       }
 
       .leo-wechat-card {
@@ -1264,6 +1363,7 @@ const Style = () => {
       .leo-project-detail-row {
         padding: 1.35rem 0;
         border-bottom: 1px solid var(--leo-line);
+        scroll-margin-top: 6rem;
       }
 
       .leo-project-detail dt {
@@ -1289,7 +1389,9 @@ const Style = () => {
         padding-left: 0.2rem;
       }
 
-      .leo-project-aside {
+      .leo-project-side {
+        position: sticky;
+        top: 6rem;
         height: fit-content;
         padding: 1.25rem;
         border: 1px solid var(--leo-line);
@@ -1302,6 +1404,83 @@ const Style = () => {
         color: var(--leo-muted);
         font-size: 0.82rem;
         line-height: 1.7;
+      }
+
+      .leo-project-toc {
+        margin-bottom: 1.1rem;
+        padding-bottom: 1.1rem;
+        border-bottom: 1px solid var(--leo-line);
+      }
+
+      .leo-project-toc > p {
+        margin-bottom: 0.65rem;
+        color: var(--leo-accent-strong);
+        font-size: 0.62rem;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+      }
+
+      .leo-project-toc ol {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.25rem 0.65rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .leo-project-toc a {
+        color: var(--leo-muted);
+        font-size: 0.72rem;
+        line-height: 1.5;
+        transition: color 180ms ease;
+      }
+
+      .leo-project-toc a:hover {
+        color: var(--leo-accent);
+      }
+
+      .leo-responsibility-table {
+        overflow: hidden;
+        border: 1px solid var(--leo-line);
+        border-radius: 0.7rem;
+      }
+
+      .leo-responsibility-table > div {
+        display: grid;
+        grid-template-columns: minmax(7rem, 0.35fr) minmax(0, 1fr);
+      }
+
+      .leo-responsibility-table > div + div {
+        border-top: 1px solid var(--leo-line);
+      }
+
+      .leo-responsibility-table strong,
+      .leo-responsibility-table span {
+        padding: 0.75rem 0.85rem;
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+
+      .leo-responsibility-table strong {
+        background: var(--leo-subtle);
+        color: var(--leo-ink);
+      }
+
+      .leo-responsibility-table span {
+        border-left: 1px solid var(--leo-line);
+        color: var(--leo-muted);
+      }
+
+      .leo-footer-brand {
+        display: grid;
+        gap: 0.1rem;
+      }
+
+      .leo-footer-brand p:last-child {
+        color: var(--leo-muted);
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
       }
 
       #theme-nobelium article h2 {
@@ -1337,6 +1516,27 @@ const Style = () => {
         .leo-project-detail {
           grid-template-columns: 1fr;
         }
+
+        .leo-project-side {
+          display: contents;
+        }
+
+        .leo-project-toc,
+        .leo-project-aside {
+          padding: 1.25rem;
+          border: 1px solid var(--leo-line);
+          border-radius: var(--leo-radius);
+          background: var(--leo-subtle);
+        }
+
+        .leo-project-toc {
+          order: -1;
+          margin: 0;
+        }
+
+        .leo-project-aside {
+          order: 1;
+        }
       }
 
       @media (max-width: 767px) {
@@ -1358,6 +1558,32 @@ const Style = () => {
 
         .leo-home-description {
           line-height: 1.8;
+        }
+
+        .leo-hero-kicker {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.45rem;
+        }
+
+        .leo-hero-kicker > span {
+          padding-left: 0;
+          border-left: 0;
+        }
+
+        .leo-hero-copy > .leo-hero-actions {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .leo-hero-copy > .leo-hero-actions .leo-button {
+          width: 100%;
+        }
+
+        .leo-hero-copy > .leo-hero-actions .leo-about-link {
+          grid-column: 1 / -1;
+          width: fit-content;
+          margin-left: 0;
         }
 
         .leo-slogan {
@@ -1450,6 +1676,15 @@ const Style = () => {
 
         .leo-start-item > :last-child {
           grid-column: 2;
+        }
+
+        .leo-responsibility-table > div {
+          grid-template-columns: 1fr;
+        }
+
+        .leo-responsibility-table span {
+          padding-top: 0;
+          border-left: 0;
         }
       }
 

@@ -20,9 +20,9 @@ const ProjectVisual = ({ project }) => (
             <i />
           </div>
           <div className='leo-review-panel'>
-            <span>12 MATCH</span>
-            <span>03 REVIEW</span>
-            <span>01 RISK</span>
+            <span>MATCH</span>
+            <span>REVIEW</span>
+            <span>RISK</span>
           </div>
         </>
       )}
@@ -36,8 +36,8 @@ const ProjectVisual = ({ project }) => (
           </div>
           <div className='leo-estimate-total'>
             <span>ENGINEERING</span>
-            <strong>42.5</strong>
-            <small>EFFORT UNITS</small>
+            <strong>MODEL</strong>
+            <small>REVIEW REQUIRED</small>
           </div>
         </>
       )}
@@ -62,9 +62,28 @@ const LeoProjectCard = ({ project }) => (
     <div className='leo-project-card-body'>
       <div className='leo-project-meta'>
         <span className='leo-status'>{project.status}</span>
+        {project.updatedDate && (
+          <time dateTime={project.updatedDate}>
+            UPDATED {project.updatedDate.replaceAll('-', '.')}
+          </time>
+        )}
       </div>
       <h3>{project.title}</h3>
       <p>{project.summary}</p>
+      <dl className='leo-project-proof'>
+        <div>
+          <dt>当前进展</dt>
+          <dd>{project.currentProgress}</dd>
+        </div>
+        <div>
+          <dt>可公开证据</dt>
+          <dd>{project.publicEvidence}</dd>
+        </div>
+        <div>
+          <dt>下一步</dt>
+          <dd>{project.nextMilestone}</dd>
+        </div>
+      </dl>
       <div className='leo-tag-list' aria-label='项目分类'>
         {project.category.map(category => (
           <span key={category}>{category}</span>
