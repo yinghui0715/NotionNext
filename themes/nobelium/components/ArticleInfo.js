@@ -13,9 +13,9 @@ export const ArticleInfo = props => {
   const emailHash = md5((plainEmail || '#').toLowerCase())
 
   return (
-    <section className='flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
-      <div>
-        <h1 className='font-bold text-3xl text-black dark:text-white'>
+    <section className='flex w-full min-w-0 max-w-full flex-wrap mt-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
+      <div className='w-full min-w-0 max-w-full'>
+        <h1 className='max-w-full break-words font-bold text-3xl text-black dark:text-white'>
           {siteConfig('POST_TITLE_ICON') && (
             <NotionIcon icon={post?.pageIcon} />
           )}
