@@ -1,9 +1,11 @@
 import {
   getLeoProject,
+  LEO_CONTACT_PROMPTS,
   LEO_FOCUS_AREAS,
+  LEO_POSITIONING,
   LEO_PROJECTS,
   stripLeadingArticleEmoji
-} from '@/lib/site/leoBrandContent'
+} from '../../../lib/site/leoBrandContent'
 
 describe('Leo brand content', () => {
   it('defines the three public focus areas', () => {
@@ -26,6 +28,26 @@ describe('Leo brand content', () => {
       LEO_PROJECTS.length
     )
     expect(getLeoProject(slugs[0])).toEqual(LEO_PROJECTS[0])
+    expect(
+      LEO_PROJECTS.every(
+        project =>
+          project.currentProgress &&
+          project.publicEvidence &&
+          project.nextMilestone &&
+          project.updatedDate &&
+          project.responsibility.length === 3
+      )
+    ).toBe(true)
+  })
+
+  it('keeps the public positioning and contact prompts centralized', () => {
+    expect(LEO_POSITIONING.identity).toContain('工程师驱动')
+    expect(LEO_POSITIONING.footer).toContain('Engineering AI')
+    expect(LEO_CONTACT_PROMPTS.map(item => item.title)).toEqual([
+      '你的背景',
+      '当前卡点',
+      '希望得到的结果'
+    ])
   })
 
   it('documents the quotation review project without claiming results', () => {

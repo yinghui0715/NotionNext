@@ -1,6 +1,7 @@
 import DarkModeButton from '@/components/DarkModeButton'
 import Vercel from '@/components/Vercel'
 import { siteConfig } from '@/lib/config'
+import { LEO_POSITIONING } from '@/lib/site/leoBrandContent'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
@@ -30,7 +31,10 @@ export const Footer = props => {
       <hr className='border-gray-200 dark:border-gray-600' />
       <div className='my-4 text-sm leading-6'>
         <div className='flex items-center justify-between gap-4 flex-wrap'>
-          <p>© 2026 {siteConfig('BRAND_NAME_EN')}</p>
+          <div className='leo-footer-brand'>
+            <p>© 2026 {siteConfig('BRAND_NAME_EN')}</p>
+            <p>{LEO_POSITIONING.footer}</p>
+          </div>
           <nav aria-label='页脚导航'>
             <ul className='flex items-center gap-4'>
               <li>
