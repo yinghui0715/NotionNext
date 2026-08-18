@@ -70,20 +70,6 @@ const LeoProjectCard = ({ project }) => (
       </div>
       <h3>{project.title}</h3>
       <p>{project.summary}</p>
-      <dl className='leo-project-proof'>
-        <div>
-          <dt>当前进展</dt>
-          <dd>{project.currentProgress}</dd>
-        </div>
-        <div>
-          <dt>可公开证据</dt>
-          <dd>{project.publicEvidence}</dd>
-        </div>
-        <div>
-          <dt>下一步</dt>
-          <dd>{project.nextMilestone}</dd>
-        </div>
-      </dl>
       <div className='leo-tag-list' aria-label='项目分类'>
         {project.category.map(category => (
           <span key={category}>{category}</span>
