@@ -915,35 +915,6 @@ const Style = () => {
         letter-spacing: 0.06em;
       }
 
-      .leo-project-proof {
-        display: grid;
-        gap: 0;
-        margin: 0 0 1rem;
-        border-top: 1px solid var(--leo-line);
-      }
-
-      .leo-project-proof > div {
-        display: grid;
-        grid-template-columns: 4.5rem minmax(0, 1fr);
-        gap: 0.65rem;
-        padding: 0.65rem 0;
-        border-bottom: 1px solid var(--leo-line);
-      }
-
-      .leo-project-proof dt {
-        color: var(--leo-muted);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.05em;
-      }
-
-      .leo-project-proof dd {
-        margin: 0;
-        color: var(--leo-ink);
-        font-size: 0.72rem;
-        line-height: 1.55;
-      }
-
       .leo-tag-list {
         display: flex;
         flex-wrap: wrap;
