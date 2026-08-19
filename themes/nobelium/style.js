@@ -1517,6 +1517,28 @@ const Style = () => {
       }
 
       @media (max-width: 640px) {
+        #theme-nobelium #article-wrapper,
+        #theme-nobelium #notion-article,
+        #theme-nobelium #notion-article .notion,
+        #theme-nobelium #notion-article .notion-page,
+        #theme-nobelium #notion-article .notion-page-content,
+        #theme-nobelium #notion-article .notion-page-content-inner {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+
+        #theme-nobelium #notion-article .notion-page-content-inner > * {
+          max-width: 100%;
+        }
+
+        #theme-nobelium #notion-article .notion-text,
+        #theme-nobelium #notion-article .notion-quote,
+        #theme-nobelium #notion-article .notion-callout {
+          overflow-wrap: anywhere;
+        }
+
         .leo-hero {
           gap: 2.5rem;
           padding-top: 2.75rem;

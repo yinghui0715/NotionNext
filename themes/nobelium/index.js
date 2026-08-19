@@ -291,10 +291,10 @@ const LayoutSlug = props => {
       {lock && <ArticleLock validPassword={validPassword} />}
 
       {!lock && post && (
-        <div className='px-2'>
+        <div className='w-full min-w-0 max-w-full px-2'>
           <>
             <ArticleInfo post={post} />
-            <div id='article-wrapper'>
+            <div id='article-wrapper' className='w-full min-w-0 max-w-full'>
               <NotionPage post={post} />
             </div>
             <ShareBar post={post} />
