@@ -52,15 +52,6 @@ const ProjectVisual = ({ project }) => (
           <span>DELIVERY</span>
         </div>
       )}
-      {project.visual === 'beauty' && (
-        <div className='leo-beauty-shelf'>
-          <span className='leo-beauty-mirror' />
-          <span className='leo-beauty-bottle' />
-          <span className='leo-beauty-jar' />
-          <span className='leo-beauty-leaves'>•••</span>
-          <i />
-        </div>
-      )}
     </div>
   </div>
 )

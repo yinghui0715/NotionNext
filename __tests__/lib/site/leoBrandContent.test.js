@@ -20,7 +20,6 @@ describe('Leo brand content', () => {
     const slugs = LEO_PROJECTS.map(project => project.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
     expect(LEO_PROJECTS.map(project => project.status)).toEqual([
-      'Case Study',
       'Building',
       'Case Study',
       'Prototype'
@@ -60,17 +59,6 @@ describe('Leo brand content', () => {
     expect(project.nextStep.length).toBeGreaterThan(2)
     expect(project.demo).toContain('Synthetic Data')
     expect(project.result).toContain('尚未提供可验证 Demo')
-  })
-
-  it('publishes Beauty Shelf with a working public demo and clear boundaries', () => {
-    const project = getLeoProject('beauty-shelf')
-
-    expect(project.links[0].href).toMatch(/^https:\/\//)
-    expect(project.result).toContain('151 个国内外品牌')
-    expect(project.limitations).toContain('尚未完成备案和正式发布')
-    expect(project.responsibility[2].scope).toContain(
-      '不判断产品一定过期或安全'
-    )
   })
 
   it('removes decorative leading emoji without changing the source title', () => {
