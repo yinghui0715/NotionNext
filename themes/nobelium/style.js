@@ -744,6 +744,130 @@ const Style = () => {
         padding: 1.1rem;
       }
 
+      .leo-project-visual.is-beauty {
+        border-bottom-color: #d8c9bd;
+        background:
+          radial-gradient(
+            circle at 80% 18%,
+            rgba(142, 48, 71, 0.15),
+            transparent 34%
+          ),
+          linear-gradient(135deg, #fbf7f1, #eee4dc);
+        color: #342c2b;
+      }
+
+      .leo-project-visual.is-beauty .leo-project-visual-header {
+        border-bottom-color: rgba(122, 49, 65, 0.16);
+        color: #8e3047;
+      }
+
+      .leo-beauty-shelf {
+        position: relative;
+        width: min(100%, 15rem);
+        height: 7.4rem;
+      }
+
+      .leo-beauty-shelf > i {
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.55rem;
+        left: 0.5rem;
+        height: 0.48rem;
+        border-radius: 999px;
+        background: #7a3141;
+        box-shadow: 0 0.38rem 0 rgba(122, 49, 65, 0.12);
+      }
+
+      .leo-beauty-mirror {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        width: 4.85rem;
+        height: 4.85rem;
+        border: 0.5rem solid #8e3047;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff, #dfd8d1);
+        box-shadow: 0 0 0 0.18rem #f8f0e8;
+      }
+
+      .leo-beauty-mirror::after {
+        position: absolute;
+        right: 50%;
+        bottom: -1.15rem;
+        width: 0.44rem;
+        height: 1.15rem;
+        border-radius: 999px;
+        background: #8e3047;
+        content: '';
+        transform: translateX(50%);
+      }
+
+      .leo-beauty-bottle {
+        position: absolute;
+        bottom: 1rem;
+        left: 2.2rem;
+        width: 3.35rem;
+        height: 4.25rem;
+        border: 0.18rem solid #7a3141;
+        border-radius: 0.8rem 0.8rem 0.45rem 0.45rem;
+        background: linear-gradient(145deg, #f5dfe2, #c98f9d);
+      }
+
+      .leo-beauty-bottle::before {
+        position: absolute;
+        top: -1.35rem;
+        left: 0.78rem;
+        width: 1.45rem;
+        height: 1.25rem;
+        border-radius: 0.35rem 0.35rem 0.15rem 0.15rem;
+        background: #7a3141;
+        content: '';
+      }
+
+      .leo-beauty-bottle::after {
+        position: absolute;
+        top: 1.3rem;
+        left: 50%;
+        width: 1.7rem;
+        height: 1rem;
+        border-radius: 0.2rem;
+        background: rgba(255, 249, 244, 0.78);
+        content: '';
+        transform: translateX(-50%);
+      }
+
+      .leo-beauty-jar {
+        position: absolute;
+        bottom: 1rem;
+        left: 6.25rem;
+        width: 3.45rem;
+        height: 2.35rem;
+        border: 0.18rem solid #7a3141;
+        border-radius: 0.35rem 0.35rem 0.75rem 0.75rem;
+        background: #faf2eb;
+      }
+
+      .leo-beauty-jar::before {
+        position: absolute;
+        top: -0.65rem;
+        right: -0.18rem;
+        left: -0.18rem;
+        height: 0.65rem;
+        border-radius: 0.32rem 0.32rem 0.08rem 0.08rem;
+        background: #7a3141;
+        content: '';
+      }
+
+      .leo-beauty-leaves {
+        position: absolute;
+        top: 0.5rem;
+        left: 6.8rem;
+        color: #738271;
+        font-size: 1.3rem;
+        letter-spacing: 0.08rem;
+        transform: rotate(-32deg);
+      }
+
       .leo-quote-sheet {
         display: grid;
         width: 56%;
@@ -1327,6 +1451,103 @@ const Style = () => {
         margin-top: 2.5rem;
       }
 
+      .leo-project-case-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(13rem, 0.55fr);
+        gap: clamp(1.5rem, 5vw, 4.5rem);
+        align-items: center;
+        margin-top: 2.5rem;
+        padding: clamp(1.5rem, 4vw, 3.5rem);
+        overflow: hidden;
+        border: 1px solid #ddcfc3;
+        border-radius: calc(var(--leo-radius) * 1.15);
+        background:
+          radial-gradient(
+            circle at 82% 15%,
+            rgba(142, 48, 71, 0.16),
+            transparent 32%
+          ),
+          linear-gradient(135deg, #fcf8f2, #eee3da);
+        color: #342c2b;
+      }
+
+      .dark .leo-project-case-hero {
+        border-color: rgba(218, 179, 188, 0.25);
+        background:
+          radial-gradient(
+            circle at 82% 15%,
+            rgba(142, 48, 71, 0.32),
+            transparent 32%
+          ),
+          linear-gradient(135deg, #241c1c, #171414);
+        color: #f7ece8;
+      }
+
+      .leo-project-case-hero > div > p {
+        margin: 0 0 0.85rem;
+        color: #8e3047;
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+
+      .leo-project-case-hero h2 {
+        max-width: 38rem;
+        margin: 0;
+        font-size: clamp(1.35rem, 2.6vw, 2.2rem);
+        line-height: 1.35;
+      }
+
+      .leo-project-case-hero dl {
+        display: grid;
+        gap: 0.85rem;
+        margin: 1.5rem 0 0;
+      }
+
+      .leo-project-case-hero dl > div {
+        display: grid;
+        grid-template-columns: 5.5rem minmax(0, 1fr);
+        gap: 0.8rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(122, 49, 65, 0.16);
+      }
+
+      .leo-project-case-hero dt {
+        color: #8e3047;
+        font-size: 0.72rem;
+        font-weight: 750;
+      }
+
+      .leo-project-case-hero dd {
+        margin: 0;
+        color: #6e5f5a;
+        font-size: 0.8rem;
+        line-height: 1.65;
+      }
+
+      .dark .leo-project-case-hero dd {
+        color: #c9bbb6;
+      }
+
+      .leo-project-case-hero figure {
+        margin: 0;
+        text-align: center;
+      }
+
+      .leo-project-case-hero img {
+        width: 100%;
+        max-width: 18rem;
+        border-radius: 28%;
+        box-shadow: 0 24px 60px rgba(96, 37, 50, 0.2);
+      }
+
+      .leo-project-case-hero figcaption {
+        margin-top: 0.65rem;
+        color: #8a7670;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+      }
+
       .leo-project-detail dl {
         margin: 0;
       }
@@ -1375,6 +1596,16 @@ const Style = () => {
         color: var(--leo-muted);
         font-size: 0.82rem;
         line-height: 1.7;
+      }
+
+      .leo-project-links {
+        display: grid;
+        gap: 0.6rem;
+        margin: 1rem 0 0.7rem;
+      }
+
+      .leo-project-links .leo-button {
+        width: 100%;
       }
 
       .leo-project-toc {
@@ -1488,6 +1719,10 @@ const Style = () => {
           grid-template-columns: 1fr;
         }
 
+        .leo-project-case-hero {
+          grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.45fr);
+        }
+
         .leo-project-side {
           display: contents;
         }
@@ -1517,6 +1752,24 @@ const Style = () => {
       }
 
       @media (max-width: 640px) {
+        .leo-project-case-hero {
+          grid-template-columns: 1fr;
+          padding: 1.35rem;
+        }
+
+        .leo-project-case-hero dl > div {
+          grid-template-columns: 1fr;
+          gap: 0.25rem;
+        }
+
+        .leo-project-case-hero figure {
+          order: -1;
+        }
+
+        .leo-project-case-hero img {
+          max-width: 11.5rem;
+        }
+
         #theme-nobelium #article-wrapper,
         #theme-nobelium #notion-article,
         #theme-nobelium #notion-article .notion,

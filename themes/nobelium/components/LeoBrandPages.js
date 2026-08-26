@@ -95,6 +95,35 @@ export const ProjectDetailPage = ({ project }) => (
       )}
     </PageHeader>
 
+    {project.cover && (
+      <section className='leo-project-case-hero' aria-label='项目概览'>
+        <div>
+          <p>FROM PRIVATE GIFT TO PUBLIC PRODUCT</p>
+          <h2>{project.currentProgress}</h2>
+          <dl>
+            <div>
+              <dt>公开验证</dt>
+              <dd>{project.publicEvidence}</dd>
+            </div>
+            <div>
+              <dt>下一里程碑</dt>
+              <dd>{project.nextMilestone}</dd>
+            </div>
+          </dl>
+        </div>
+        <figure>
+          <LazyImage
+            priority
+            src={project.cover}
+            alt={`${project.title} 项目图标`}
+            width={720}
+            height={720}
+          />
+          <figcaption>Beauty Shelf · Local First · Privacy First</figcaption>
+        </figure>
+      </section>
+    )}
+
     <div className='leo-project-detail'>
       <dl>
         {projectRows.map(({ label, key, id }) => (
@@ -126,6 +155,19 @@ export const ProjectDetailPage = ({ project }) => (
               <span key={item}>{item}</span>
             ))}
           </div>
+          {project.links?.length > 0 && (
+            <div className='leo-project-links'>
+              {project.links.map(link => (
+                <SmartLink
+                  key={link.href}
+                  href={link.href}
+                  className='leo-button leo-button-secondary'
+                >
+                  {link.label} <span aria-hidden='true'>↗</span>
+                </SmartLink>
+              ))}
+            </div>
+          )}
           <SmartLink href='/contact' className='leo-button leo-button-primary'>
             交流类似问题
           </SmartLink>
