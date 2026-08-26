@@ -875,6 +875,110 @@ const Style = () => {
         background: linear-gradient(90deg, #344057, #60a5fa);
       }
 
+      .leo-statusbar-preview {
+        display: grid;
+        width: min(100%, 18rem);
+        gap: 0.65rem;
+        padding: 0.85rem;
+        border: 1px solid #39445a;
+        border-radius: 0.8rem;
+        background: rgba(20, 25, 37, 0.96);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+      }
+
+      .leo-statusbar-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.4rem;
+      }
+
+      .leo-statusbar-metrics span {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 0.28rem;
+        padding: 0.45rem 0.38rem;
+        border: 1px solid #30394c;
+        border-radius: 0.45rem;
+        background: #191f2b;
+        color: #9aa5b8;
+        font-size: 0.38rem;
+        font-weight: 750;
+        letter-spacing: 0.06em;
+      }
+
+      .leo-statusbar-metrics span:last-child::before,
+      .leo-statusbar-metrics i,
+      .leo-statusbar-task > i {
+        width: 0.38rem;
+        height: 0.38rem;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: #22c55e;
+        content: '';
+      }
+
+      .leo-statusbar-metrics span:last-child::before {
+        background: #fb7185;
+      }
+
+      .leo-statusbar-task {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.7rem;
+        border: 1px solid #364158;
+        border-radius: 0.55rem;
+        background: linear-gradient(135deg, #1a2230, #141925);
+      }
+
+      .leo-statusbar-task > i {
+        width: 0.5rem;
+        height: 0.5rem;
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.7);
+      }
+
+      .leo-statusbar-task div {
+        display: grid;
+        min-width: 0;
+        gap: 0.18rem;
+      }
+
+      .leo-statusbar-task strong {
+        color: #e5e7eb;
+        font-size: 0.56rem;
+        letter-spacing: 0.06em;
+      }
+
+      .leo-statusbar-task small,
+      .leo-statusbar-usage span {
+        color: #7f8aa0;
+        font-size: 0.4rem;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+      }
+
+      .leo-statusbar-usage {
+        display: grid;
+        gap: 0.38rem;
+      }
+
+      .leo-statusbar-usage i {
+        position: relative;
+        height: 0.32rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #2b3342;
+      }
+
+      .leo-statusbar-usage i::after {
+        position: absolute;
+        inset: 0 28% 0 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #22c55e, #60a5fa);
+        content: '';
+      }
+
       .leo-project-meta,
       .leo-article-meta {
         display: flex;
@@ -1360,6 +1464,32 @@ const Style = () => {
         padding-left: 0.2rem;
       }
 
+      .leo-project-demo {
+        display: grid;
+        width: min(100%, 24rem);
+        gap: 0.7rem;
+        margin: 1rem auto 0.25rem;
+      }
+
+      .leo-project-demo img {
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--leo-line);
+        border-radius: 1rem;
+        box-shadow: 0 20px 55px rgba(15, 23, 42, 0.16);
+      }
+
+      .dark .leo-project-demo img {
+        box-shadow: 0 22px 58px rgba(0, 0, 0, 0.34);
+      }
+
+      .leo-project-demo figcaption {
+        color: var(--leo-muted);
+        font-size: 0.72rem;
+        line-height: 1.65;
+        text-align: center;
+      }
+
       .leo-project-side {
         position: sticky;
         top: 6rem;
@@ -1375,6 +1505,17 @@ const Style = () => {
         color: var(--leo-muted);
         font-size: 0.82rem;
         line-height: 1.7;
+      }
+
+      .leo-project-links {
+        display: grid;
+        gap: 0.55rem;
+        margin-bottom: 0.55rem;
+      }
+
+      .leo-project-links .leo-button,
+      .leo-project-aside > .leo-button {
+        width: 100%;
       }
 
       .leo-project-toc {

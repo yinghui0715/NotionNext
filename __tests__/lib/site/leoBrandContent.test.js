@@ -20,6 +20,7 @@ describe('Leo brand content', () => {
     const slugs = LEO_PROJECTS.map(project => project.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
     expect(LEO_PROJECTS.map(project => project.status)).toEqual([
+      'Open Source Beta',
       'Building',
       'Case Study',
       'Prototype'
@@ -38,6 +39,23 @@ describe('Leo brand content', () => {
           project.responsibility.length === 3
       )
     ).toBe(true)
+  })
+
+  it('publishes the AI Coding Status Bar with public proof and safe media', () => {
+    const project = getLeoProject('ai-coding-status-bar')
+
+    expect(project.status).toBe('Open Source Beta')
+    expect(project.demo.image).toBe(
+      '/images/projects/ai-coding-status-bar-dashboard.png'
+    )
+    expect(project.links.map(link => link.href)).toEqual(
+      expect.arrayContaining([
+        'https://github.com/yinghui0715/ai-coding-status-bar',
+        'https://github.com/yinghui0715/ai-coding-status-bar/releases/tag/v1.2.0-beta.1'
+      ])
+    )
+    expect(project.result).toContain('v1.2.0-beta.1')
+    expect(project.limitations).toContain('不会伪造展示')
   })
 
   it('keeps the public positioning and contact prompts centralized', () => {

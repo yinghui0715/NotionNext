@@ -63,6 +63,15 @@ const ProjectDetailValue = ({ detailKey, value }) => {
     return <ResponsibilityTable rows={value} />
   }
 
+  if (detailKey === 'demo' && value?.image) {
+    return (
+      <figure className='leo-project-demo'>
+        <LazyImage src={value.image} alt={value.alt || ''} />
+        {value.caption && <figcaption>{value.caption}</figcaption>}
+      </figure>
+    )
+  }
+
   if (Array.isArray(value)) {
     return (
       <ol className='leo-project-detail-list'>
@@ -126,6 +135,19 @@ export const ProjectDetailPage = ({ project }) => (
               <span key={item}>{item}</span>
             ))}
           </div>
+          {project.links?.length > 0 && (
+            <div className='leo-project-links' aria-label='项目链接'>
+              {project.links.map(link => (
+                <SmartLink
+                  key={link.href}
+                  href={link.href}
+                  className='leo-button leo-button-secondary'
+                >
+                  {link.label}
+                </SmartLink>
+              ))}
+            </div>
+          )}
           <SmartLink href='/contact' className='leo-button leo-button-primary'>
             交流类似问题
           </SmartLink>
@@ -159,8 +181,9 @@ export const AboutPage = () => (
       <section>
         <h2>当前正在构建</h2>
         <p>
-          目前重点包括供应商报价审查 Agent、工程工作量估算方法，以及 Engineering
-          Operations AI 原型。项目会按 Building、Prototype 或 Case Study
+          目前重点包括 AI Coding Status Bar、供应商报价审查
+          Agent、工程工作量估算方法，以及 Engineering Operations AI
+          原型。项目会按 Open Source Beta、Building、Prototype 或 Case Study
           如实标注。
         </p>
       </section>

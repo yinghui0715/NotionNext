@@ -21,6 +21,7 @@ export async function getStaticProps({ params, locale }) {
     seoMeta: {
       title: `${project.title} | Leo 数字工坊`,
       description: project.summary,
+      image: project.cover || undefined,
       slug: `projects/${project.slug}`
     }
   })

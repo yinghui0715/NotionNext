@@ -52,6 +52,28 @@ const ProjectVisual = ({ project }) => (
           <span>DELIVERY</span>
         </div>
       )}
+      {project.visual === 'statusbar' && (
+        <div className='leo-statusbar-preview'>
+          <div className='leo-statusbar-metrics'>
+            <span>
+              <i /> RUNNING
+            </span>
+            <span>COMPLETED</span>
+            <span>FAILED</span>
+          </div>
+          <div className='leo-statusbar-task'>
+            <i />
+            <div>
+              <strong>CODEX TASK</strong>
+              <small>LOCAL SESSION · TOKEN USAGE</small>
+            </div>
+          </div>
+          <div className='leo-statusbar-usage'>
+            <span>TODAY TOKENS</span>
+            <i />
+          </div>
+        </div>
+      )}
     </div>
   </div>
 )
