@@ -1,0 +1,106 @@
+import { resolvePublishedNotionImage } from '@/lib/db/notion/officialContentLibrary'
+
+const MAX_IMAGE_BYTES = 15 * 1024 * 1024
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    res.setHeader('Allow', 'GET, HEAD')
+    return res.status(405).end('Method not allowed')
+  }
+
+  const id = singleQueryValue(req.query?.id)
+  const target = singleQueryValue(req.query?.target) || 'block'
+  if (!isNotionId(id) || !['block', 'page'].includes(target)) {
+    return res.status(400).end('Invalid image request')
+  }
+
+  try {
+    const source = await resolvePublishedNotionImage(id, target)
+    if (!source) return res.status(404).end('Image not found')
+
+    const upstream = await fetch(source)
+    const contentLength = Number(upstream.headers.get('content-length'))
+    if (
+      !upstream.ok ||
+      (Number.isFinite(contentLength) && contentLength > MAX_IMAGE_BYTES)
+    ) {
+      return res.status(502).end('Image unavailable')
+    }
+
+    const bytes = Buffer.from(await upstream.arrayBuffer())
+    if (bytes.length > MAX_IMAGE_BYTES) {
+      return res.status(413).end('Image too large')
+    }
+
+    const contentType = detectImageContentType(
+      bytes,
+      upstream.headers.get('content-type')
+    )
+    if (!contentType) return res.status(502).end('Image unavailable')
+
+    res.setHeader('Content-Type', contentType)
+    res.setHeader('Content-Length', String(bytes.length))
+    res.setHeader('Content-Disposition', 'inline')
+    res.setHeader(
+      'Cache-Control',
+      'public, max-age=60, s-maxage=60, must-revalidate'
+    )
+    res.setHeader('X-Content-Type-Options', 'nosniff')
+    return req.method === 'HEAD'
+      ? res.status(200).end()
+      : res.status(200).send(bytes)
+  } catch (error) {
+    console.warn(
+      '[Notion image proxy] request failed:',
+      error?.code || error?.name || 'unknown'
+    )
+    return res.status(404).end('Image not found')
+  }
+}
+
+function singleQueryValue(value) {
+  return Array.isArray(value) ? null : value
+}
+
+function isNotionId(value) {
+  return (
+    typeof value === 'string' &&
+    /^[0-9a-f]{32}$/i.test(value.replaceAll('-', ''))
+  )
+}
+
+export function detectImageContentType(bytes, declaredType) {
+  const declared = String(declaredType || '')
+    .split(';')[0]
+    .trim()
+    .toLowerCase()
+  if (declared.startsWith('image/') && declared !== 'image/svg+xml') {
+    return declared
+  }
+
+  if (hasBytes(bytes, [0xff, 0xd8, 0xff])) return 'image/jpeg'
+  if (hasBytes(bytes, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) {
+    return 'image/png'
+  }
+  if (hasAscii(bytes, 0, 'GIF87a') || hasAscii(bytes, 0, 'GIF89a')) {
+    return 'image/gif'
+  }
+  if (hasAscii(bytes, 0, 'RIFF') && hasAscii(bytes, 8, 'WEBP')) {
+    return 'image/webp'
+  }
+  if (hasAscii(bytes, 4, 'ftypavif') || hasAscii(bytes, 4, 'ftypavis')) {
+    return 'image/avif'
+  }
+
+  return null
+}
+
+function hasBytes(bytes, signature) {
+  return signature.every((value, index) => bytes[index] === value)
+}
+
+function hasAscii(bytes, offset, signature) {
+  return [...signature].every(
+    (character, index) => bytes[offset + index] === character.charCodeAt(0)
+  )
+}
