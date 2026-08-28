@@ -1,198 +1,74 @@
-<div align="center">
+# Leo Digital Lab｜Leo 数字工坊
 
-<img src="https://github.com/user-attachments/assets/c111204d-2016-4343-92e4-83357cac4b19" width="96" height="96" alt="NotionNext Logo" />
+> Build Your Digital Future.
 
-# NotionNext
+[正式网站](https://www.leodigitallab.com) · [联系 Leo](mailto:liyinghui.cn@outlook.com)
 
-用 Notion 搭建自己的独立站
+Leo Digital Lab 是 Leo 的专业个人网站，记录 **AI Automation × Engineering AI** 的公开构建过程，以及工作流自动化和数字系统实践。
 
-继续在 Notion 写作，一键发布为博客、作品集、知识库、导航站或产品官网。
+## 网站职责
 
-<p>
-  <a href="https://preview.tangly1024.com/">在线预览</a>
-  ·
-  <a href="https://notionnext.tangly1024.com/user-guide/start-here">开始搭建</a>
-  ·
-  <a href="https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG">主题全览</a>
-  ·
-  <a href="https://notionnext.tangly1024.com/user-guide/showcase">用户作品</a>
-  ·
-  <a href="https://notionnext.tangly1024.com/">文档站</a>
-  ·
-  <a href="https://github.com/notionnext-org/NotionNext/discussions">讨论区</a>
-</p>
-
-<p>
-  <a aria-label="GitHub commit activity" href="https://github.com/notionnext-org/NotionNext/commits/main" title="GitHub commit activity">
-    <img src="https://img.shields.io/github/commit-activity/m/notionnext-org/NotionNext?style=for-the-badge"/>
-  </a>
-  <a aria-label="GitHub contributors" href="https://github.com/notionnext-org/NotionNext/graphs/contributors" title="GitHub contributors">
-    <img src="https://img.shields.io/github/contributors/notionnext-org/NotionNext?color=orange&style=for-the-badge"/>
-  </a>
-  <a aria-label="Build status" href="#" title="Build status">
-    <img src="https://img.shields.io/github/deployments/notionnext-org/NotionNext/Production?logo=Vercel&style=for-the-badge"/>
-  </a>
-  <a aria-label="Powered by Vercel" href="https://vercel.com?utm_source=Craigary&utm_campaign=oss" title="Powered by Vercel">
-    <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" height="28"/>
-  </a>
-</p>
-
-中文 | [English](./README_EN.md)
-
-</div>
-
----
-
-## NotionNext 是什么？
-
-NotionNext 是一个基于 **Next.js + Notion API** 的开源站点系统。你继续用 Notion 管理文章、分类、标签、菜单和页面，NotionNext 负责把这些内容发布成可访问、可搜索、可运营的独立网站。
-
-它适合想长期沉淀内容的人：内容创作者、独立开发者、设计师、摄影师、课程作者、开源项目维护者，以及需要快速搭建产品官网或知识库的小团队。
-
-## 你可以用它做什么？
-
-| 目标 | 推荐入口 | 适合人群 |
-| --- | --- | --- |
-| 搭个人博客 | [从这里开始](https://notionnext.tangly1024.com/user-guide/start-here) | 内容创作者、独立开发者、学生 |
-| 做作品集或个人品牌站 | [按场景选主题](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG#按场景选主题) | 设计师、摄影师、自由职业者 |
-| 做产品官网或 SaaS 落地页 | [Starter / Landing / Proxio](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG#按场景选主题) | 创业者、独立产品、小团队 |
-| 做知识库或文档站 | [GitBook / Claude](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG#按场景选主题) | 开源项目、课程作者、团队文档 |
-| 做导航站或资源聚合 | [Nav 主题](https://notionnext.tangly1024.com/user-guide/themes/nav) | 资源整理者、社群运营者 |
-
-## 为什么选择 NotionNext？
-
-- **不换写作工具**：文章、分类、标签、封面、菜单仍在 Notion 中维护。
-- **上线路径短**：复制 Notion 模板、Fork 仓库、连接 Vercel，即可部署。
-- **主题选择多**：内置 26 个主题，覆盖博客、文档、作品集、官网、相册、导航站等场景。
-- **适合长期运营**：支持独立域名、SEO、Sitemap、RSS、评论、统计、搜索、广告和邮件订阅。
-- **开源可控**：源码、配置和主题都在自己的仓库里，后续可以继续二次开发。
-- **数据链路清晰**：Notion 负责内容沉淀，站点负责展示和分发，后续可迁移到 Markdown 或其他系统。
-
-## 20 分钟部署路线
-
-1. 打开 [主题预览站](https://preview.tangly1024.com/) 看最终效果。
-2. 复制 NotionNext 官方 Notion 模板。
-3. Fork 本仓库到自己的 GitHub 账号。
-4. 使用 [Vercel 部署 NotionNext](https://notionnext.tangly1024.com/user-guide/deploy-vercel)。
-5. 在环境变量中填写 Notion 页面 ID 等配置。
-6. 部署成功后，按场景选择主题并补齐域名、评论、统计、搜索等功能。
-
-新手建议直接从文档站的 [从这里开始](https://notionnext.tangly1024.com/user-guide/start-here) 阅读。
-
-## 主题与预览
-
-- 在线切换主题：[preview.tangly1024.com](https://preview.tangly1024.com/)
-- 26 个内置主题：[主题全览](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG)
-- 仓库内主题文档：[docs/user-guide/themes/](./docs/user-guide/themes/)
-
-| 场景 | 优先看 |
-| --- | --- |
-| 个人博客 | `simple`、`hexo`、`nobelium`、`typography` |
-| 文档 / 知识库 | `gitbook`、`claude`、`thoughtlite` |
-| 作品集 / 个人品牌 | `opc`、`proxio`、`starter`、`landing` |
-| 产品官网 | `starter`、`landing`、`commerce` |
-| 图片 / 摄影 | `photo`、`plog`、`magzine` |
-| 导航站 | `nav` |
-
-## 本地开发
-
-推荐使用 Node 22 和 Yarn 1。Node 20 已无法安装当前依赖（`@ai-sdk/google` 要求 Node >=22），部署平台也需要同步设置为 Node 22。
-
-```bash
-# 1. 使用 Node 22
-nvm use || nvm install
-
-# 2. 安装 Yarn
-npm i -g yarn
-
-# 3. 安装依赖
-yarn
-
-# 4. 启动开发
-yarn dev
-```
-
-常用命令：
-
-| 命令 | 用途 |
-| --- | --- |
-| `yarn dev` | 启动本地开发 |
-| `yarn build` | 构建生产版本 |
-| `yarn export` | 静态导出 |
-| `yarn docs:site:dev` | 本地预览文档站 |
-| `yarn docs:site:build` | 构建文档站 |
-
-## 文档入口
-
-自 2026 年起，NotionNext 使用仓库内 Markdown 文档作为主要教程来源，并发布为独立文档站。
-
-| 内容 | 链接 |
-| --- | --- |
-| 在线文档站 | [notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
-| 新手入口 | [从这里开始](https://notionnext.tangly1024.com/user-guide/start-here) |
-| 场景模板 | [按目标选择模板](https://notionnext.tangly1024.com/user-guide/templates) |
-| 配置索引 | [全站功能与配置索引](https://notionnext.tangly1024.com/user-guide/reference/features) |
-| 主题说明 | [26 个主题说明](https://notionnext.tangly1024.com/user-guide/themes/THEMES_CATALOG) |
-| 用户作品 | [Showcase](https://notionnext.tangly1024.com/user-guide/showcase)：已上线站点欢迎提交作品 |
-| 文档源码 | [docs/](./docs/) |
-| 旧版手册 | [docs.tangly1024.com](https://docs.tangly1024.com/) |
-
-## 参与社区
-
-NotionNext 主仓库由 GitHub 组织 [notionnext-org](https://github.com/notionnext-org) 维护。欢迎提交问题、补充文档、贡献主题、修复代码或参与讨论。
-
-| 内容 | 链接 |
-| --- | --- |
-| 参与社区 | [community-participate.md](./docs/user-guide/community-participate.md) |
-| 5.0 愿景与路线图 | [VISION_ROADMAP.md](./docs/developer/VISION_ROADMAP.md) |
-| 贡献指南 | [CONTRIBUTING.zh-CN.md](./CONTRIBUTING.zh-CN.md) |
-| 项目治理 | [GOVERNANCE.zh-CN.md](./GOVERNANCE.zh-CN.md) |
-| 维护者 | [MAINTAINERS.md](./MAINTAINERS.md) |
-| 行为准则 | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
-| 讨论区 | [GitHub Discussions](https://github.com/notionnext-org/NotionNext/discussions) |
-
-如果你在仓库转让前已克隆旧地址，建议更新远程仓库：
-
-```bash
-git remote set-url origin https://github.com/notionnext-org/NotionNext.git
-git remote -v
-```
+- 展示真实项目、原型和解决方案
+- 发布 Engineering AI、AI Automation、Digital Systems 与 Build in Public 内容
+- 为长期项目实践、合作咨询和产品验证提供稳定入口
 
 ## 技术栈
 
-- **框架**：[Next.js](https://nextjs.org)
-- **样式**：[Tailwind CSS](https://www.tailwindcss.cn/)
-- **渲染**：[react-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**：Twikoo、Giscus、Gitalk、Cusdis、Utterances
-- **部署**：[Vercel](https://vercel.com)
+- Next.js 15、React 18、Tailwind CSS
+- Notion 官方 API（服务端只读）
+- Vercel Preview 与 Production
+- Cloudflare 域名和私有 Notion 图片代理
 
-## 相关项目
+## 内容与发布规则
 
-- [Elog](https://github.com/LetTTGACO/elog)：Markdown 批量导出工具，支持组合 Notion、语雀、FlowUs、飞书等写作平台与 Hexo、VitePress、Halo、WordPress 等博客平台。
+Content Library 是文章的唯一事实来源，不在仓库中复制文章正文。公开内容必须同时满足：
 
-## 致谢
+1. `Status = Published`
+2. `Publish Channel` 包含“网站”
 
-感谢 Craig Hart 发起的 Nobelium 项目。
+渲染文章时，遇到 `🔒 内部发布工作区｜不对外展示` 必须跳过整个区块及其子内容，并且不把内部标题加入文章目录。
 
-<table><tr align="left">
-  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;" alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
-</tr></table>
+`NOTION_API_KEY` 仅供服务端读取使用。密钥不得写入代码、Markdown、日志或使用 `NEXT_PUBLIC_` 前缀。
 
-感谢每一位参与代码、主题、文档、Issue、Review 与发布维护的贡献者。
+## 本地开发
 
-[![Contributors](https://contrib.rocks/image?repo=notionnext-org/NotionNext)](https://github.com/notionnext-org/NotionNext/graphs/contributors)
+环境要求：Node.js 22、Yarn 1.22。
 
-## 使用声明
+```bash
+yarn install --frozen-lockfile
+yarn dev
+```
 
-本项目为免费、公开资源，仅限个人学习和合法站点建设使用。禁止利用本项目发布非法内容或进行违法活动。
+常用验证命令：
 
-## License
+```bash
+yarn lint
+yarn type-check
+yarn test
+yarn build
+```
 
-The MIT License.
+环境变量只在本地私有环境或 Vercel 中配置，仓库只记录变量名称，不记录变量值。
 
-## Project Stars
+## 发布流程
 
-[![GitHub stars](https://img.shields.io/github/stars/notionnext-org/NotionNext?style=social)](https://github.com/notionnext-org/NotionNext/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/notionnext-org/NotionNext?style=social)](https://github.com/notionnext-org/NotionNext/forks)
+1. 从 `main` 创建功能分支。
+2. 完成修改并运行测试与生产构建。
+3. 创建 Draft PR，生成受保护的 Vercel Preview。
+4. 在桌面端、移动端和深色模式下进行 Human Review。
+5. 获得人工确认后才可合并并部署 Production。
+6. 正式上线后核验 `https://www.leodigitallab.com`，并回填正式 URL。
 
-Live star-history charts are temporarily unavailable because GitHub now restricts historical stargazer data to repository owners and collaborators.
+详细流程见 [DEPLOYMENT.md](./DEPLOYMENT.md)。内容映射与回滚说明见 [docs/](./docs/)。
+
+## 维护原则
+
+- Human Review
+- Single Source of Truth
+- Upgrade First
+- 所有重要改动必须可回滚
+- 不删除现有文章，不擅自改变正式 URL、slug 或内容发布门
+
+## 开源来源与许可证
+
+本网站基于开源项目 [NotionNext](https://github.com/notionnext-org/NotionNext) 持续定制。原项目及本仓库适用 MIT License；原作者版权和许可文本保留在 [LICENSE](./LICENSE) 中。
