@@ -161,7 +161,7 @@ const LayoutBase = props => {
 const LayoutIndex = props => {
   return (
     <>
-      <LeoHomeIntro />
+      <LeoHomeIntro posts={props.posts} />
       <Announcement {...props} />
       <BlogListPage {...props} variant='home' />
       <LeoHomeClosing />
@@ -369,13 +369,13 @@ const Layout404 = props => {
  * @param {*} props
  * @returns
  */
-const LayoutCategoryIndex = () => (
+const LayoutCategoryIndex = ({ latestPosts }) => (
   <section className='leo-page'>
     <header className='leo-page-header leo-column-header'>
       <h1>内容栏目</h1>
       <p>按「Leo数字工坊」公众号的栏目浏览网站文章。</p>
     </header>
-    <LeoColumnGrid />
+    <LeoColumnGrid posts={latestPosts} />
     <SmartLink
       href={getLeoColumnHref(LEO_WEEKLY_TOPIC.name)}
       className='leo-section-link'
