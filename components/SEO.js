@@ -388,7 +388,7 @@ const getSEOMeta = (props, router, locale) => {
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title || TITLE} | AI 实验、自动化与数字生活`,
+        title: `${siteInfo?.title || TITLE} | AI 与技术、效率与成长、投资与财务、生活与旅行`,
         description: LEO_EDITORIAL_DESCRIPTION,
         image: `${siteInfo?.pageCover}`,
         slug: '',

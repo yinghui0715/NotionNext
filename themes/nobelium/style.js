@@ -230,7 +230,7 @@ const Style = () => {
 
       .leo-column-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.85rem;
         margin: 0;
         padding: 0;
@@ -1721,6 +1721,10 @@ const Style = () => {
       }
 
       @media (max-width: 640px) {
+        .leo-column-grid {
+          grid-template-columns: 1fr;
+        }
+
         #theme-nobelium #article-wrapper,
         #theme-nobelium #notion-article,
         #theme-nobelium #notion-article .notion,

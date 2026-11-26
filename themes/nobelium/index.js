@@ -5,7 +5,11 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { getLeoColumn } from '@/lib/site/leoEditorial'
+import {
+  getLeoColumn,
+  getLeoColumnHref,
+  LEO_WEEKLY_TOPIC
+} from '@/lib/site/leoEditorial'
 import { deepClone, isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
@@ -372,6 +376,12 @@ const LayoutCategoryIndex = () => (
       <p>按「Leo数字工坊」公众号的栏目浏览网站文章。</p>
     </header>
     <LeoColumnGrid />
+    <SmartLink
+      href={getLeoColumnHref(LEO_WEEKLY_TOPIC.name)}
+      className='leo-section-link'
+    >
+      专题：{LEO_WEEKLY_TOPIC.name} <span aria-hidden='true'>↗</span>
+    </SmartLink>
   </section>
 )
 

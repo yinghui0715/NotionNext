@@ -51,7 +51,7 @@ describe('Leo brand content', () => {
 
   it('keeps the public positioning and contact prompts centralized', () => {
     expect(LEO_POSITIONING.identity).toContain('工程师驱动')
-    expect(LEO_POSITIONING.footer).toContain('数字生活')
+    expect(LEO_POSITIONING.footer).toContain('生活与旅行')
     expect(LEO_CONTACT_PROMPTS.map(item => item.title)).toEqual([
       '你的背景',
       '当前卡点',
