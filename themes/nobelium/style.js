@@ -223,6 +223,10 @@ const Style = () => {
         padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(2.5rem, 5.5vw, 4.5rem);
       }
 
+      .leo-editorial-hero h1 {
+        white-space: pre-line;
+      }
+
       .leo-editorial-feature {
         display: grid;
         min-width: 0;

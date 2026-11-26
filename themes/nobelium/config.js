@@ -6,7 +6,7 @@ const CONFIG = {
 
   // Leo 数字工坊首页
   NOBELIUM_LEO_EYEBROW: 'LEO DIGITAL LAB',
-  NOBELIUM_LEO_TITLE: '把数字工具用到工作与生活里',
+  NOBELIUM_LEO_TITLE: '把数字工具\n用到工作与生活里',
   NOBELIUM_LEO_DESCRIPTION: LEO_EDITORIAL_DESCRIPTION,
 
   // 特殊菜单
