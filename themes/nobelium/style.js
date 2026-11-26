@@ -231,7 +231,7 @@ const Style = () => {
       .leo-column-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.85rem;
+        gap: 1rem;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -250,46 +250,160 @@ const Style = () => {
       }
 
       .leo-column-card {
+        --column-color: var(--leo-accent);
+        --column-mark: color-mix(in srgb, var(--column-color) 15%, transparent);
+        position: relative;
+        isolation: isolate;
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: 0.4rem 0.75rem;
-        align-content: start;
+        grid-template-areas: 'icon arrow' 'copy copy';
+        align-content: space-between;
+        align-items: start;
+        gap: 1.2rem 0.85rem;
+        min-width: 0;
+        min-height: 10rem;
         height: 100%;
-        padding: 1.15rem;
+        padding: clamp(1.15rem, 2.1vw, 1.55rem);
         border: 1px solid var(--leo-line);
-        border-radius: var(--leo-radius);
+        border-radius: 1rem;
         background: var(--leo-card);
-        transition: border-color 180ms ease, background-color 180ms ease;
+        background: linear-gradient(
+          115deg,
+          var(--leo-card) 28%,
+          color-mix(in srgb, var(--column-color) 9%, var(--leo-card))
+        );
+        text-decoration: none;
+        transition:
+          border-color 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .leo-column-card[data-visual='technology'] {
+        --column-color: #1d4ed8;
+        --column-dark-color: #93b8ff;
+        --column-pattern:
+          linear-gradient(90deg, var(--column-mark) 1px, transparent 1px),
+          linear-gradient(var(--column-mark) 1px, transparent 1px);
+        --column-pattern-size: 19px 19px;
+      }
+
+      .leo-column-card[data-visual='growth'] {
+        --column-color: #6d28b1;
+        --column-dark-color: #c9a5ff;
+        --column-pattern: radial-gradient(
+          circle,
+          var(--column-mark) 1.45px,
+          transparent 1.7px
+        );
+        --column-pattern-size: 15px 15px;
+      }
+
+      .leo-column-card[data-visual='finance'] {
+        --column-color: #08765b;
+        --column-dark-color: #75d7b3;
+        --column-pattern: repeating-linear-gradient(
+          145deg,
+          transparent 0 18px,
+          var(--column-mark) 18px 19px,
+          transparent 19px 24px
+        );
+      }
+
+      .leo-column-card[data-visual='travel'] {
+        --column-color: #a14b21;
+        --column-dark-color: #ffbb86;
+        --column-pattern: repeating-radial-gradient(
+          ellipse at 100% 0,
+          transparent 0 13px,
+          var(--column-mark) 14px 15px,
+          transparent 16px 22px
+        );
+      }
+
+      .dark .leo-column-card[data-visual] {
+        --column-color: var(--column-dark-color, var(--leo-accent));
+      }
+
+      .leo-column-card::before {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        border-radius: inherit;
+        background-image: var(--column-pattern);
+        background-size: var(--column-pattern-size, auto);
+        mask-image: radial-gradient(
+          ellipse at top right,
+          #000 2%,
+          transparent 59%
+        );
+        pointer-events: none;
+        content: '';
       }
 
       .leo-column-card:hover,
       .leo-column-card:focus-visible {
-        border-color: var(--leo-accent);
-        background: var(--leo-subtle);
+        border-color: var(--column-color);
+        box-shadow: 0 5px 18px
+          color-mix(in srgb, var(--column-color) 12%, transparent);
       }
 
-      .leo-column-card:focus-visible {
-        outline: 2px solid var(--leo-accent);
-        outline-offset: 2px;
+      #theme-nobelium .leo-column-card:focus-visible {
+        outline-color: var(--column-color);
+      }
+
+      .leo-column-icon,
+      .leo-column-arrow {
+        display: grid;
+        place-items: center;
+        color: var(--column-color);
+      }
+
+      .leo-column-icon {
+        grid-area: icon;
+        width: 2.8rem;
+        height: 2.8rem;
+        border: 1px solid var(--column-mark);
+        border-radius: 0.85rem;
+        background: var(--leo-card);
+        background: color-mix(in srgb, var(--column-color) 10%, var(--leo-card));
+      }
+
+      .leo-column-arrow {
+        grid-area: arrow;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--column-mark);
+        border-radius: 50%;
+        background: var(--leo-card);
+        transition:
+          background-color 180ms ease,
+          transform 180ms ease;
+      }
+
+      .leo-column-card:hover .leo-column-arrow,
+      .leo-column-card:focus-visible .leo-column-arrow {
+        background: color-mix(in srgb, var(--column-color) 10%, var(--leo-card));
+        transform: translate(2px, -2px);
+      }
+
+      .leo-column-copy {
+        grid-area: copy;
+        display: grid;
+        min-width: 0;
+        gap: 0.4rem;
       }
 
       .leo-column-name {
         color: var(--leo-ink);
-        font-size: 1.05rem;
-        font-weight: 680;
+        font-size: clamp(1.15rem, 2vw, 1.4rem);
+        font-weight: 700;
+        line-height: 1.28;
       }
 
       .leo-column-description {
-        grid-column: 1;
         color: var(--leo-muted);
         font-size: 0.88rem;
         line-height: 1.7;
-      }
-
-      .leo-column-card > span[aria-hidden] {
-        grid-column: 2;
-        grid-row: 1;
-        color: var(--leo-accent);
       }
 
       .leo-hero-kicker {
@@ -1723,6 +1837,21 @@ const Style = () => {
       @media (max-width: 640px) {
         .leo-column-grid {
           grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        .leo-column-card {
+          grid-template-areas: 'icon copy arrow';
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          align-items: center;
+          align-content: center;
+          min-height: 6.25rem;
+          padding: 1rem;
+        }
+
+        .leo-column-arrow {
+          width: 1.75rem;
+          height: 1.75rem;
         }
 
         #theme-nobelium #article-wrapper,

@@ -1,24 +1,48 @@
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
 import { getLeoColumnHref, LEO_COLUMNS } from '@/lib/site/leoEditorial'
+import {
+  IconArrowUpRight,
+  IconBooks,
+  IconChartLine,
+  IconCode,
+  IconCompass
+} from '@tabler/icons-react'
 import CONFIG from '../config'
 
-const Arrow = () => <span aria-hidden='true'>↗</span>
+const columnIcons = {
+  technology: IconCode,
+  growth: IconBooks,
+  finance: IconChartLine,
+  travel: IconCompass
+}
 
 export const LeoColumnGrid = () => (
   <ul className='leo-column-grid'>
-    {LEO_COLUMNS.map(column => (
-      <li key={column.name}>
-        <SmartLink
-          href={getLeoColumnHref(column.name)}
-          className='leo-column-card'
-        >
-          <span className='leo-column-name'>{column.name}</span>
-          <span className='leo-column-description'>{column.description}</span>
-          <Arrow />
-        </SmartLink>
-      </li>
-    ))}
+    {LEO_COLUMNS.map(column => {
+      const ColumnIcon = columnIcons[column.visual]
+
+      return (
+        <li key={column.name}>
+          <SmartLink
+            href={getLeoColumnHref(column.name)}
+            className='leo-column-card'
+            data-visual={column.visual}
+          >
+            <span className='leo-column-icon' aria-hidden='true'>
+              <ColumnIcon size={25} stroke={1.65} focusable='false' />
+            </span>
+            <span className='leo-column-copy'>
+              <span className='leo-column-name'>{column.name}</span>
+              <span className='leo-column-description'>{column.description}</span>
+            </span>
+            <span className='leo-column-arrow' aria-hidden='true'>
+              <IconArrowUpRight size={17} stroke={1.75} focusable='false' />
+            </span>
+          </SmartLink>
+        </li>
+      )
+    })}
   </ul>
 )
 
