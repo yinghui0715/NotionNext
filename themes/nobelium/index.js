@@ -5,6 +5,7 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { getLeoColumn } from '@/lib/site/leoEditorial'
 import { deepClone, isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
@@ -22,7 +23,10 @@ import { BlogListScroll } from './components/BlogListScroll'
 import Catalog from './components/Catalog'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
-import LeoHomeIntro, { LeoHomeClosing } from './components/LeoHomeIntro'
+import LeoHomeIntro, {
+  LeoColumnGrid,
+  LeoHomeClosing
+} from './components/LeoHomeIntro'
 import Nav from './components/Nav'
 import SearchNavBar from './components/SearchNavBar'
 import CONFIG from './config'
@@ -50,6 +54,7 @@ const LayoutBase = props => {
   const router = useRouter()
   const isBrandPage = [
     '/',
+    '/category',
     '/projects',
     '/projects/[slug]',
     '/about',
@@ -166,7 +171,8 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, topSlot, tag } = props
+  const { posts, topSlot, tag, category } = props
+  const column = getLeoColumn(category)
   const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
@@ -183,7 +189,18 @@ const LayoutPostList = props => {
     <>
       {topSlot}
       {tag && <SearchNavBar {...props} />}
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+      {category && (
+        <header className='leo-page-header leo-column-header'>
+          <SmartLink href='/category' className='leo-text-link'>
+            ← 全部栏目
+          </SmartLink>
+          <h1>{category}</h1>
+          {column && <p>{column.description}</p>}
+        </header>
+      )}
+      {category && !filteredBlogPosts?.length ? (
+        <p className='leo-empty-state'>这个栏目暂时还没有已发布的文章。</p>
+      ) : siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogListPage {...props} posts={filteredBlogPosts} />
       ) : (
         <BlogListScroll {...props} posts={filteredBlogPosts} />
@@ -348,35 +365,15 @@ const Layout404 = props => {
  * @param {*} props
  * @returns
  */
-const LayoutCategoryIndex = props => {
-  const { categoryOptions } = props
-
-  return (
-    <>
-      <div id='category-list' className='duration-200 flex flex-wrap'>
-        {categoryOptions?.map(category => {
-          return (
-            <SmartLink
-              key={category.name}
-              href={`/category/${category.name}`}
-              passHref
-              legacyBehavior
-            >
-              <div
-                className={
-                  'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-                }
-              >
-                <i className='mr-4 fas fa-folder' />
-                {category.name}({category.count})
-              </div>
-            </SmartLink>
-          )
-        })}
-      </div>
-    </>
-  )
-}
+const LayoutCategoryIndex = () => (
+  <section className='leo-page'>
+    <header className='leo-page-header leo-column-header'>
+      <h1>内容栏目</h1>
+      <p>按「Leo数字工坊」公众号的栏目浏览网站文章。</p>
+    </header>
+    <LeoColumnGrid />
+  </section>
+)
 
 /**
  * 文章标签列表

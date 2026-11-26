@@ -1,6 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  getLeoCategoryRouteNames,
+  getPublishedCategoryPosts
+} from '@/lib/site/leoEditorial'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -17,14 +21,7 @@ export async function getStaticProps({ params: { category }, locale }) {
   const from = 'category-props'
   let props = await fetchGlobalAllData({ from, locale })
 
-  // 过滤状态
-  props.posts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  // 处理过滤
-  props.posts = props.posts.filter(
-    post => post && post.category && post.category.includes(category)
-  )
+  props.posts = getPublishedCategoryPosts(props.allPages, category)
 
   // 处理文章页数
   props.postCount = props.posts.length
@@ -62,10 +59,9 @@ export async function getStaticProps({ params: { category }, locale }) {
 export async function getStaticPaths() {
   const from = 'category-paths'
   const { categoryOptions } = await fetchGlobalAllData({ from })
-  const categories = Array.isArray(categoryOptions) ? categoryOptions : []
   return {
-    paths: categories.map(category => ({
-      params: { category: category?.name }
+    paths: getLeoCategoryRouteNames(categoryOptions).map(category => ({
+      params: { category }
     })),
     fallback: true
   }

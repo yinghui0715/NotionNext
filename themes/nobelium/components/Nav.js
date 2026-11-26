@@ -159,17 +159,15 @@ const NavBar = () => {
               </button>
               <div className='leo-mobile-menu-kicker'>
                 <span>LEO DIGITAL LAB</span>
-                <small>AI AUTOMATION × ENGINEERING AI</small>
               </div>
               <ul>
-                {LEO_NAV_ITEMS.map((link, index) => (
+                {LEO_NAV_ITEMS.map(link => (
                   <li key={link.href}>
                     <SmartLink
                       href={link.href}
                       aria-current={isActive(link.href) ? 'page' : undefined}
                       onClick={() => changeOpen(false)}
                     >
-                      <span>{String(index + 1).padStart(2, '0')}</span>
                       {link.name}
                       <i aria-hidden='true'>↗</i>
                     </SmartLink>

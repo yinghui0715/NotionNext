@@ -1,12 +1,13 @@
+import { LEO_EDITORIAL_DESCRIPTION } from '@/lib/site/leoEditorial'
+
 const CONFIG = {
   NOBELIUM_NAV_NOTION_ICON: true, // 是否读取Notion图标作为站点头像 ; 否则默认显示黑色SVG方块
   NOBELIUM_COLOR_PRIMARY: '#2563eb',
 
   // Leo 数字工坊首页
   NOBELIUM_LEO_EYEBROW: 'LEO DIGITAL LAB',
-  NOBELIUM_LEO_TITLE: '用 AI 与自动化，解决真实的工程和业务问题',
-  NOBELIUM_LEO_DESCRIPTION:
-    '记录 AI Agents、工作流自动化与 Engineering AI 的真实实践，把工作中的重复流程构建成可复用的数字解决方案。',
+  NOBELIUM_LEO_TITLE: '把数字工具用到工作与生活里',
+  NOBELIUM_LEO_DESCRIPTION: LEO_EDITORIAL_DESCRIPTION,
 
   // 特殊菜单
   NOBELIUM_MENU_RANDOM_POST: false, // 极简导航不显示随机文章

@@ -5,6 +5,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { stripLeadingArticleEmoji } from '@/lib/site/leoBrandContent'
+import { getLeoArticleColumn } from '@/lib/site/leoEditorial'
 
 const BlogPost = ({ post, variant }) => {
   const { NOTION_CONFIG } = useGlobal()
@@ -30,7 +31,7 @@ const BlogPost = ({ post, variant }) => {
             />
           ) : (
             <div className='leo-article-fallback-visual' aria-hidden='true'>
-              <span>DAILY INTELLIGENCE</span>
+              <span>LEO DIGITAL LAB</span>
               <strong>AI / SYSTEMS</strong>
               <i />
               <small>FIELD NOTES · {post?.publishDay || 'LATEST'}</small>
@@ -39,7 +40,12 @@ const BlogPost = ({ post, variant }) => {
         </SmartLink>
         <div className='leo-article-card-body'>
           <div className='leo-article-meta'>
-            <span>{post?.category || post?.series || '文章'}</span>
+            <span>
+              {getLeoArticleColumn(post)?.name ||
+                post?.category ||
+                post?.series ||
+                '文章'}
+            </span>
             <time dateTime={post?.publishDay}>{post?.publishDay}</time>
           </div>
           <h2>

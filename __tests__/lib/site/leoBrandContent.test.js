@@ -1,21 +1,12 @@
 import {
   getLeoProject,
   LEO_CONTACT_PROMPTS,
-  LEO_FOCUS_AREAS,
   LEO_POSITIONING,
   LEO_PROJECTS,
   stripLeadingArticleEmoji
 } from '../../../lib/site/leoBrandContent'
 
 describe('Leo brand content', () => {
-  it('defines the three public focus areas', () => {
-    expect(LEO_FOCUS_AREAS.map(item => item.title)).toEqual([
-      'Engineering AI',
-      'AI Automation',
-      'Digital Systems'
-    ])
-  })
-
   it('keeps project slugs unique and exposes honest lifecycle states', () => {
     const slugs = LEO_PROJECTS.map(project => project.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
@@ -60,7 +51,7 @@ describe('Leo brand content', () => {
 
   it('keeps the public positioning and contact prompts centralized', () => {
     expect(LEO_POSITIONING.identity).toContain('工程师驱动')
-    expect(LEO_POSITIONING.footer).toContain('Engineering AI')
+    expect(LEO_POSITIONING.footer).toContain('数字生活')
     expect(LEO_CONTACT_PROMPTS.map(item => item.title)).toEqual([
       '你的背景',
       '当前卡点',

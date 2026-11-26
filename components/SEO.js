@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { getLeoColumn, LEO_EDITORIAL_DESCRIPTION } from '@/lib/site/leoEditorial'
 import { createSiteUrl, normalizeSiteUrl } from '@/lib/sitemap-utils'
 import { isHttpLink, loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
@@ -383,11 +384,12 @@ const getSEOMeta = (props, router, locale) => {
   }
 
   const TITLE = siteConfig('TITLE')
+  const column = getLeoColumn(category)
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | AI Automation × Engineering AI`,
-        description: `${siteInfo?.description}`,
+        title: `${siteInfo?.title || TITLE} | AI 实验、自动化与数字生活`,
+        description: LEO_EDITORIAL_DESCRIPTION,
         image: `${siteInfo?.pageCover}`,
         slug: '',
         type: 'website'
@@ -411,7 +413,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: column?.description || siteInfo?.description,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -419,7 +421,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: column?.description || siteInfo?.description,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
